@@ -4,7 +4,13 @@
   "description": "A node.js CRUD app for managing locker assignments in the GT Library.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx nodemon --delay 500ms server"
+  },
+  "nodemonCofig": {
+    "watch": [
+      "server"
+    ]
   },
   "author": "Tyler Jones",
   "license": "ISC",
@@ -15,6 +21,7 @@
     "mysql": "^2.18.1"
   },
   "devDependencies": {
+    "nodemon": "^2.0.15",
     "standard": "^16.0.4"
   }
 }
