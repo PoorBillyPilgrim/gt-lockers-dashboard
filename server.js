@@ -16,10 +16,12 @@ const pool = mysql.createPool(config.db)
 app.get('/', (req, res) => {
   pool.getConnection((err, connection) => {
     if (err) console.error(err)
-    connection.query('SELECT * FROM lockers WHERE floor = 5', (err, results, fields) => {
-      if (err) console.error(err)
-      const locker = results[0]
-      res.send(`<p>${locker.locker_number} is found on ${locker.floor}</p>`)
+    connection.query('SELECT * ', (err, results, fields) => {
+      if (err) {
+				res.status(300).json({'error':'sorry, an error has occured'})
+				console.error(err)
+			}
+      res.status(200).send(results)
     })
     connection.release()
   })
