@@ -11,18 +11,17 @@ const port = config.port || 4000
 app.use(cors())
 app.use(helmet())
 
-
 const pool = mysql.createPool(config.db)
-
-
 
 app.get('/', (req, res) => {
   pool.getConnection((err, connection) => {
+    if (err) console.error(err)
+    connection.query('SELECT * FROM lockers WHERE floor = 5', (err, results, fields) => {
       if (err) console.error(err)
-      connection.query('SELECT * FROM lockers WHERE floor = 5', (err, results, fields) => {
-          if (err) console.error(err)
-          res.send(results)
-      })
+      const locker = results[0]
+      res.send(`<p>${locker.locker_number} is found on ${locker.floor}</p>`)
+    })
+    connection.release()
   })
 })
 

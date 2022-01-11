@@ -5,13 +5,14 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx nodemon --delay 500ms server",
+    "dev": "npx nodemon server.js",
     "lint": "npx standard --fix"
   },
   "nodemonCofig": {
     "watch": [
       "server"
-    ]
+    ],
+    "delay": "2500"
   },
   "author": "Tyler Jones",
   "license": "ISC",
