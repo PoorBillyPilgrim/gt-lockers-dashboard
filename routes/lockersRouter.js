@@ -13,4 +13,26 @@ router.get('/', async (req, res) =>{
 	}
 })
 
+router.get('/:lockerGroup', async (req, res) => {
+    let sql = 'SELECT * FROM lockers WHERE locker_group = ?'
+	try {
+		const [rows] = await pool.query(sql, [req.params.lockerGroup])
+		res.status(200).send(rows)
+	} catch (err) {
+		// handleError(err, res)
+        console.error(err)
+	}
+})
+
+router.get('/floors/:floor', async (req, res) => {
+    let sql  = 'SELECT * FROM lockers WHERE floor = ?'
+	try {
+		const [rows] = await pool.query(sql, [req.params.floor])
+        if (rows)
+		res.status(200).send(rows)
+	} catch (err) {
+		handleError(err, res)
+	}
+})
+
 module.exports = router
