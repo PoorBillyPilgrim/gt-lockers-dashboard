@@ -24,7 +24,8 @@ const handleError = (err, res) => {
 let sql = 'Select * FROM lockers'
 
 
-app.get('/lockers', async (req, res) => {
+app.use('/lockers', require('./routes/lockersRouter.js'))
+/*app.get('/lockers', async (req, res) => {
 
 	try {
 		const [rows] = await pool.query(sql)
@@ -32,7 +33,7 @@ app.get('/lockers', async (req, res) => {
 	} catch(err) {
 		handleError(err, res)
 	}
-})
+})*/
 
 app.get('/lockers/floors/:floor', async (req, res) =>{
 	sql += ' WHERE floor = ?'
