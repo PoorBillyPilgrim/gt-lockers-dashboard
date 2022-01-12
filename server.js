@@ -1,5 +1,5 @@
 const express = require('express')
-const mysql = require('mysql2/promise')
+// const mysql = require('mysql2/promise')
 const config = require('./config.js')
 
 const cors = require('cors')
@@ -13,8 +13,8 @@ app.use(cors())
 app.use(helmet())
 
 // initialize pool
-const pool = mysql.createPool(config.db)
-
+// const pool = mysql.createPool(config.db)
+const pool = require('./database.js')
 
 const handleError = (err, res) => {
 	res.status(300).json({'error':'sorry, a query error has occurred'})
@@ -27,7 +27,7 @@ let sql = 'Select * FROM lockers'
 app.get('/lockers', async (req, res) => {
 
 	try {
-		const [rows] = await pool.query(selectAll)
+		const [rows] = await pool.query(sql)
 		res.status(200).send(rows)
 	} catch(err) {
 		handleError(err, res)
