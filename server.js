@@ -5,29 +5,52 @@ const config = require('./config.js')
 const cors = require('cors')
 const helmet = require('helmet')
 
+
 const app = express()
 const port = config.port || 4000
 
 app.use(cors())
 app.use(helmet())
 
-app.get('/', async (req, res) => {
-	
+// initialize pool
+const pool = mysql.createPool(config.db)
+
+
+const handleError = (err, res) => {
+	res.status(300).json({'error':'sorry, a query error has occurred'})
+	console.error(err)
+}
+
+let sql = 'Select * FROM lockers'
+
+
+app.get('/lockers', async (req, res) => {
+
 	try {
-		const pool = await mysql.createPool(config.db)
-		const connection = await pool.getConnection()
-		try {
-			const [rows] = await connection.execute('SELECT * FROM lockers WHERE floor = ?', [5])
-			res.status(200).send(rows)
-		} catch (err) {
-			res.status(300).json({'error':'sorry, a query error has occurred'})
-			console.error(err)
-		} finally {
-			connection.release()
-		}
+		const [rows] = await pool.query(selectAll)
+		res.status(200).send(rows)
+	} catch(err) {
+		handleError(err, res)
+	}
+})
+
+app.get('/lockers/floors/:floor', async (req, res) =>{
+	sql += ' WHERE floor = ?'
+	try {
+		const [rows] = await pool.query(sql, [req.params.floor])
+		res.status(200).send(rows)
 	} catch (err) {
-		res.status(300).json({'error': 'sorry, a connection error has occurred'})
-		console.error(err)
+		handleError(err, res)
+	}
+})
+
+app.get('/lockers/:group', async (req, res) => {
+	sql += ' WHERE locker_group = ?'
+	try {
+		const [rows] = await pool.query(sql, [req.params.group])
+		res.status(200).send(rows)
+	} catch (err) {
+		handleError(err, res)
 	}
 })
 
