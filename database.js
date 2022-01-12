@@ -1,5 +1,7 @@
 /**
- * pool creation reference: https://github.com/FaztTech/nodejs-mysql-links/blob/master/src/database.js
+ * pool creation reference: 
+ * - https://github.com/FaztTech/nodejs-mysql-links/blob/master/src/database.js
+ * - https://mhagemann.medium.com/create-a-mysql-database-middleware-with-node-js-8-and-async-await-6984a09d49f4
  */
 
 const mysql = require('mysql2/promise')
