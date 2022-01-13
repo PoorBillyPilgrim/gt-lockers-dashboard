@@ -15,6 +15,6 @@ export default {
     name: 'NavBar'
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 
 </style>
