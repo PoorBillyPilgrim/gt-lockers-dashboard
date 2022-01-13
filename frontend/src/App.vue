@@ -1,16 +1,17 @@
 <template>
   <div id="app">
+    <NavBar />
     <h1>Testing</h1>
   </div>
 </template>
 
 <script>
-
+import NavBar from '@/components/NavBar.vue'
 
 export default {
   name: 'App',
   components: {
-   
+    NavBar
   }
 }
 </script>
@@ -106,6 +107,5 @@ $link-focus-border: $primary;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: $primary;
-  margin-top: 60px;
 }
 </style>
