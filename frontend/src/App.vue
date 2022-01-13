@@ -1,28 +1,111 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Testing</h1>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+   
   }
 }
 </script>
 
-<style>
+<style lang="scss">
+// Import Bulma's core
+@import "~bulma/sass/utilities/_all";
+
+// Set your colors
+$primary: #000000;
+$primary-light: findLightColor($primary);
+$primary-dark: findDarkColor($primary);
+$primary-invert: findColorInvert($primary);
+$twitter: #4099FF;
+$twitter-invert: findColorInvert($twitter);
+
+// Lists and maps
+$custom-colors: null !default;
+$custom-shades: null !default;
+
+// Setup $colors to use as bulma classes (e.g. 'is-twitter')
+$colors: mergeColorMaps(
+    (
+        "white": (
+            $white,
+            $black,
+        ),
+        "black": (
+            $black,
+            $white,
+        ),
+        "light": (
+            $light,
+            $light-invert,
+        ),
+        "dark": (
+            $dark,
+            $dark-invert,
+        ),
+        "primary": (
+            $primary,
+            $primary-invert,
+            $primary-light,
+            $primary-dark,
+        ),
+        "link": (
+            $link,
+            $link-invert,
+            $link-light,
+            $link-dark,
+        ),
+        "info": (
+            $info,
+            $info-invert,
+            $info-light,
+            $info-dark,
+        ),
+        "success": (
+            $success,
+            $success-invert,
+            $success-light,
+            $success-dark,
+        ),
+        "warning": (
+            $warning,
+            $warning-invert,
+            $warning-light,
+            $warning-dark,
+        ),
+        "danger": (
+            $danger,
+            $danger-invert,
+            $danger-light,
+            $danger-dark,
+        ),
+    ),
+    $custom-colors
+);
+
+// Links
+$link: $primary;
+$link-invert: $primary-invert;
+$link-focus-border: $primary;
+
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
+
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: $primary;
   margin-top: 60px;
 }
 </style>
