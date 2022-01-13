@@ -2,16 +2,19 @@
   <div id="app">
     <NavBar />
     <h1>Testing</h1>
+    <Lockers />
   </div>
 </template>
 
 <script>
 import NavBar from '@/components/NavBar.vue'
+import Lockers from '@/components/Lockers.vue'
 
 export default {
   name: 'App',
   components: {
-    NavBar
+    NavBar,
+    Lockers
   }
 }
 </script>
@@ -105,7 +108,6 @@ $link-focus-border: $primary;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: $primary;
 }
 </style>
