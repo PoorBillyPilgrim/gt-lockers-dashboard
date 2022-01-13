@@ -11,10 +11,8 @@ export default {
   name: 'Lockers',
   data() {
     return {
-      data: [
-        {'id': 1, 'patron': 'Tyler', 'locker_number': 1234},
-        {'id': 2, 'patron': 'Sarah', 'locker_number': 5678}
-      ],
+      isLoading: true,
+      data: [],
       columns: [
         {
           field: 'id',
@@ -22,13 +20,27 @@ export default {
           numeric: true
         },
         {
-          field: 'patron',
-          label: 'Patron'
-        },
-        {
           field: 'locker_number',
           label: 'Locker Number',
           numeric: true
+        },
+        {
+          field: 'building',
+          label: 'Building',
+          numeric: true
+        },
+        {
+          field: 'floor',
+          label: 'Floor',
+          numeric: true
+        },
+        {
+          field: 'locker_group',
+          label: 'Locker Group'
+        },
+        {
+          field: 'patron_name',
+          label: 'Patron'
         }
       ]
     }
@@ -39,8 +51,10 @@ export default {
   methods: {
       async getLockers() {
         try {
-            let data = await axios.get('http://localhost:4000/lockers')
-            console.log(data)
+            let { data } = await axios.get('http://localhost:4000/lockers')
+            for (let i = 0; i < 5; i++) {
+                this.data.push(data[i])
+            }
         } catch (err) {
             console.error(err)
         }
