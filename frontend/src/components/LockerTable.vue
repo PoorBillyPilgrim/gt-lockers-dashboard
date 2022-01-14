@@ -1,22 +1,24 @@
 <template>
-<b-table
-    :data="data"
+  <b-table
+    :data="lockers"
     :columns="columns"
     :paginated="isPaginated"
     :per-page="perPage"
     :current-page.sync="currentPage"
-/>
+  />
 </template>
 <script>
-import axios from 'axios'
-
 export default {
   name: 'LockerTable',
-  props: ['lockers'],
+  props: {
+    lockers: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
       isLoading: true,
-      data: this.lockers,
       isPaginated: true,
       perPage: 20,
       currentPage: 1,
@@ -51,29 +53,6 @@ export default {
           label: 'Locker Group'
         }
       ]
-    }
-  },
-  created: function() {
-    this.getLockers()
-  },
-  methods: {
-    async getLockers() {
-      try {
-        let {data} = await axios.get('http://localhost:4000/lockers')
-        data.forEach(locker => {
-          locker.building = this.capitalize(locker.building)
-          locker.locker_group = this.capitalize(locker.locker_group)
-        })
-        this.data = data
-      } catch (err) {
-        console.error(err)
-      }
-    },
-    capitalize(word) {
-      word = word.split('_')
-      return word.length === 1 ? 
-        `${word[0][0].toUpperCase()}${word[0].substring(1)}` :
-        `${word[0][0].toUpperCase()}${word[0].substring(1)} ${word[1][0].toUpperCase()}${word[1].substring(1)}`
     }
   }
 }
