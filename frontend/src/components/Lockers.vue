@@ -1,11 +1,16 @@
 <template>
-  <b-table
-    :data="data"
-    :columns="columns"
-    :paginated="isPaginated"
-    :per-page="perPage"
-    :current-page.sync="currentPage"
-  />
+  <div class="container">
+    <h1 class="is-size-2">
+      Lockers
+    </h1>
+    <b-table
+      :data="data"
+      :columns="columns"
+      :paginated="isPaginated"
+      :per-page="perPage"
+      :current-page.sync="currentPage"
+    />
+  </div>
 </template>
 <script>
 import axios from 'axios'
@@ -32,9 +37,13 @@ export default {
           numeric: true
         },
         {
-          field: 'building',
-          label: 'Building',
+          field: 'patron_name',
+          label: 'Patron',
           searchable: true
+        },
+        {
+          field: 'building',
+          label: 'Building'
         },
         {
           field: 'floor',
@@ -43,13 +52,7 @@ export default {
         },
         {
           field: 'locker_group',
-          label: 'Locker Group',
-          searchable: true
-        },
-        {
-          field: 'patron_name',
-          label: 'Patron',
-          searchable: true
+          label: 'Locker Group'
         }
       ]
     }
@@ -62,15 +65,19 @@ export default {
       try {
         let {data} = await axios.get('http://localhost:4000/lockers')
         data.forEach(locker => {
-          locker.building = locker.building.split('_')
-          locker.building = locker.building.length === 1 ? 
-            `${locker.building[0][0].toUpperCase()}${locker.building[0].substring(1)}` :
-            `${locker.building[0][0].toUpperCase()}${locker.building[0].substring(1)} ${locker.building[1][0].toUpperCase()}${locker.building[1].substring(1)}`
+          locker.building = this.capitalize(locker.building)
+          locker.locker_group = this.capitalize(locker.locker_group)
         })
         this.data = data
       } catch (err) {
         console.error(err)
       }
+    },
+    capitalize(word) {
+      word = word.split('_')
+      return word.length === 1 ? 
+        `${word[0][0].toUpperCase()}${word[0].substring(1)}` :
+        `${word[0][0].toUpperCase()}${word[0].substring(1)} ${word[1][0].toUpperCase()}${word[1].substring(1)}`
     }
   }
 }
