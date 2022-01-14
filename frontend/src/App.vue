@@ -1,8 +1,7 @@
 <template>
   <div id="app">
     <NavBar />
-    <h1>Testing</h1>
-    <Lockers class="container" />
+    <Lockers />
   </div>
 </template>
 
