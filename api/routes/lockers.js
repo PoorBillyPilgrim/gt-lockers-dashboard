@@ -8,8 +8,7 @@ router.get('/', async (req, res) => {
     const [rows] = await pool.query('SELECT * FROM lockers')
     res.status(200).send(rows)
   } catch (err) {
-    // handleError(err, res)
-    console.error(err)
+    next(err)
   }
 })
 
@@ -19,8 +18,7 @@ router.get('/:lockerGroup', async (req, res) => {
     const [rows] = await pool.query(sql, [req.params.lockerGroup])
     res.status(200).send(rows)
   } catch (err) {
-    // handleError(err, res)
-    console.error(err)
+    next(err)
   }
 })
 
@@ -30,7 +28,7 @@ router.get('/floors/:floor', async (req, res) => {
     const [rows] = await pool.query(sql, [req.params.floor])
     if (rows) { res.status(200).send(rows) }
   } catch (err) {
-    handleError(err, res)
+    next(err)
   }
 })
 
