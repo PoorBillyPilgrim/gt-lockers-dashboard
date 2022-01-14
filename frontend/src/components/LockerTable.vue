@@ -1,6 +1,6 @@
 <template>
   <b-table
-    :data="lockers"
+    :data="filterLockers"
     :columns="columns"
     :paginated="isPaginated"
     :per-page="perPage"
@@ -14,6 +14,10 @@ export default {
     lockers: {
       type: Array,
       default: () => []
+    },
+    group: {
+      type: String,
+      default: 'all'
     }
   },
   data() {
@@ -53,6 +57,14 @@ export default {
           label: 'Locker Group'
         }
       ]
+    }
+  },
+  computed: {
+    filterLockers: function() {
+      if (this.group !== 'All') {
+        return this.lockers.filter(locker => locker.locker_group === this.group)
+      }
+      return this.lockers
     }
   }
 }

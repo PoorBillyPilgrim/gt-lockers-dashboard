@@ -3,15 +3,18 @@
     <h1 class="is-size-2">
       Lockers
     </h1>
-    <b-tabs>
-      <b-tab-item label="All">
-        <LockerTable 
-          :lockers="data"
-        />
-      </b-tab-item>
-      <b-tab-item label="General"></b-tab-item>
-      <b-tab-item label="Graduate"></b-tab-item>
-      <b-tab-item label="Faculty"></b-tab-item>
+    <b-tabs type="is-boxed">
+      <template v-for="(tab,index) in tabs">
+        <b-tab-item
+          :key="index"
+          :label="tab.group"
+        >
+          <LockerTable 
+            :lockers="data"
+            :group="tab.group"
+          />
+        </b-tab-item>
+      </template>
     </b-tabs>
   </div>
 </template>
@@ -27,7 +30,13 @@ export default {
   data() {
     return {
       isLoading: true,
-      data: []
+      data: [],
+      tabs: [
+        {group: 'All'},
+        {group: 'General'},
+        {group: 'Graduate'},
+        {group: 'Faculty'}
+      ]
     }
   },
   created: function() {
