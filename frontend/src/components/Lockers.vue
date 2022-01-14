@@ -3,9 +3,16 @@
     <h1 class="is-size-2">
       Lockers
     </h1>
-    <LockerTable 
-      :lockers="data"
-    />
+    <b-tabs>
+      <b-tab-item label="All">
+        <LockerTable 
+          :lockers="data"
+        />
+      </b-tab-item>
+      <b-tab-item label="General"></b-tab-item>
+      <b-tab-item label="Graduate"></b-tab-item>
+      <b-tab-item label="Faculty"></b-tab-item>
+    </b-tabs>
   </div>
 </template>
 <script>
