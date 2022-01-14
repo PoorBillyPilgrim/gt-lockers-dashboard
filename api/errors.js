@@ -11,7 +11,7 @@ class AppError extends Error {
     }
 }
 
-const handleErrors = (err, res) => {
+const sendErrorRes = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500;
     err.status = err.status || 'error';
 
@@ -21,12 +21,18 @@ const handleErrors = (err, res) => {
     });
 }
 
-// Catch errors from async functions and pass them along to handleErrors middleware
+const logError = (err, req, res, next) => {
+    console.error('\x1b[31m', err) // adding some color to our logs
+    next(new AppError(err.message, err.statusCode))
+}
+
+// Catch errors from async functions and pass them along to sendErrorRes middleware
 const catchAsyncErrors = fn => (req, res, next) => fn(req, res, next).catch(next);
 
 
 module.exports = {
     AppError,
-    handleErrors,
+    sendErrorRes,
+    logError,
     catchAsyncErrors
 };

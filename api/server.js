@@ -1,6 +1,6 @@
 const express = require('express')
 const config = require('./config.js')
-const {AppError, handleErrors} = require('./errors.js')
+const {sendErrorRes, logError} = require('./errors.js')
 
 const cors = require('cors')
 const helmet = require('helmet')
@@ -33,15 +33,9 @@ app.get('*', (req, res, next) => {
 
 // error handling is placed after routes have been set
 // for error handling: https://scoutapm.com/blog/express-error-handling#h_625988582581619642987320
-// log error
-app.use((err, req, res, next) => {
-  console.error('\x1b[31m', err) // adding some color to our logs
-  next(new AppError(err.message, err.statusCode))
-})
-// send error response
-app.use((err, req, res, next) => {
-  handleErrors(err, res)
-})
+// log and send error
+app.use(logError)
+app.use(sendErrorRes)
 
 app.listen(port, () => {
   console.log(`########################\nserver listening on http://localhost:${port}\n########################`)
