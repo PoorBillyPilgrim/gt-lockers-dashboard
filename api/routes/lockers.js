@@ -3,7 +3,8 @@ const router = express.Router()
 const pool = require('../database.js')
 const {AppError, catchAsyncErrors} = require('../errors.js')
 
-router.get('/', async (req, res) => {
+
+const getAll = async (req, res, next) => {
   // move all this to controlers/
   try {
     const [rows] = await pool.query('SELECT * FROM lockers')
@@ -11,7 +12,9 @@ router.get('/', async (req, res) => {
   } catch (err) {
     next(err)
   }
-})
+}
+
+router.get('/', catchAsyncErrors(getAll))
 
 
 const getLockerGroup = async (req, res, next) => {
