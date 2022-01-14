@@ -3,58 +3,24 @@
     <h1 class="is-size-2">
       Lockers
     </h1>
-    <b-table
-      :data="data"
-      :columns="columns"
-      :paginated="isPaginated"
-      :per-page="perPage"
-      :current-page.sync="currentPage"
+    <LockerTable 
+      :lockers="data"
     />
   </div>
 </template>
 <script>
 import axios from 'axios'
+import LockerTable from '@/components/LockerTable.vue'
 
 export default {
   name: 'Lockers',
+  components: {
+    LockerTable
+  },
   data() {
     return {
       isLoading: true,
-      data: [],
-      isPaginated: true,
-      perPage: 20,
-      currentPage: 1,
-      columns: [
-        {
-          field: 'id',
-          label: 'ID',
-          numeric: true,
-          width: '40'
-        },
-        {
-          field: 'locker_number',
-          label: 'Locker Number',
-          numeric: true
-        },
-        {
-          field: 'patron_name',
-          label: 'Patron',
-          searchable: true
-        },
-        {
-          field: 'building',
-          label: 'Building'
-        },
-        {
-          field: 'floor',
-          label: 'Floor',
-          numeric: true
-        },
-        {
-          field: 'locker_group',
-          label: 'Locker Group'
-        }
-      ]
+      data: []
     }
   },
   created: function() {
