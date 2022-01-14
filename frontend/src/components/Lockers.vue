@@ -2,6 +2,9 @@
   <b-table
     :data="data"
     :columns="columns"
+    :paginated="isPaginated"
+    :per-page="perPage"
+    :current-page.sync="currentPage"
   />
 </template>
 <script>
@@ -13,11 +16,15 @@ export default {
     return {
       isLoading: true,
       data: [],
+      isPaginated: true,
+      perPage: 20,
+      currentPage: 1,
       columns: [
         {
           field: 'id',
           label: 'ID',
-          numeric: true
+          numeric: true,
+          width: '40'
         },
         {
           field: 'locker_number',
@@ -27,7 +34,7 @@ export default {
         {
           field: 'building',
           label: 'Building',
-          numeric: true
+          searchable: true
         },
         {
           field: 'floor',
@@ -36,29 +43,35 @@ export default {
         },
         {
           field: 'locker_group',
-          label: 'Locker Group'
+          label: 'Locker Group',
+          searchable: true
         },
         {
           field: 'patron_name',
-          label: 'Patron'
+          label: 'Patron',
+          searchable: true
         }
       ]
     }
   },
   created: function() {
-      this.getLockers()
+    this.getLockers()
   },
   methods: {
-      async getLockers() {
-        try {
-            let { data } = await axios.get('http://localhost:4000/lockers')
-            for (let i = 0; i < 5; i++) {
-                this.data.push(data[i])
-            }
-        } catch (err) {
-            console.error(err)
-        }
+    async getLockers() {
+      try {
+        let {data} = await axios.get('http://localhost:4000/lockers')
+        data.forEach(locker => {
+          locker.building = locker.building.split('_')
+          locker.building = locker.building.length === 1 ? 
+            `${locker.building[0][0].toUpperCase()}${locker.building[0].substring(1)}` :
+            `${locker.building[0][0].toUpperCase()}${locker.building[0].substring(1)} ${locker.building[1][0].toUpperCase()}${locker.building[1].substring(1)}`
+        })
+        this.data = data
+      } catch (err) {
+        console.error(err)
       }
+    }
   }
 }
 </script>
