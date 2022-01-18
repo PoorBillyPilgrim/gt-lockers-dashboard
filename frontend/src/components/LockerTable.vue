@@ -8,33 +8,33 @@
         :per-page="perPage"
         :current-page.sync="currentPage"
       >
-    <b-table-column field="id" label="ID" width="40" :td-attrs="columnTdAttrs" numeric v-slot="props">
+    <b-table-column field="id" label="ID" width="40" numeric v-slot="props">
       {{props.row.id}}
     </b-table-column>
-    <b-table-column field="locker_number" label="Locker Number"  :td-attrs="columnTdAttrs" numeric v-slot="props">
+    <b-table-column field="locker_number" label="Locker Number"  numeric v-slot="props">
       {{props.row.locker_number}}
     </b-table-column>
-    <b-table-column field="patron_name" label="Patron Name" :td-attrs="columnTdAttrs" searchable v-slot="props">
+    <b-table-column field="patron_name" label="Patron Name" searchable v-slot="props">
       {{props.row.patron_name}}
     </b-table-column>
-    <b-table-column field="building" label="Building" :td-attrs="columnTdAttrs" v-slot="props">
+    <b-table-column field="building" label="Building" v-slot="props">
       {{props.row.building}}
     </b-table-column>
-    <b-table-column field="floor" label="Floor" :td-attrs="columnTdAttrs" numeric v-slot="props">
+    <b-table-column field="floor" label="Floor" numeric v-slot="props">
       {{props.row.floor}}
     </b-table-column>
-    <b-table-column field="locker_group" label="Locker Group" :td-attrs="columnTdAttrs" v-slot="props">
+    <b-table-column field="locker_group" label="Locker Group" v-slot="props">
       {{props.row.locker_group}}
     </b-table-column>
-    <b-table-column :td-attrs="columnTdAttrs">
-      <b-button type="is-success" @click="isEditModalActive = true">Edit</b-button>
+    <b-table-column v-slot="props">
+      <b-button type="is-success" @click="edit(props.row.id)">Edit</b-button>
     </b-table-column>
   </b-table>
-  <b-modal v-model="isEditModalActive" :width="500">
+  <b-modal v-model="isEditModalActive" :locker="currentLocker" :width="500">
     <div class="card">
       <div class="card-content">
         <div class="content">
-          TEST
+          {{currentLocker}}
         </div>
       </div>
     </div>
@@ -42,6 +42,7 @@
   </div>
 </template>
 <script>
+
 export default {
   name: 'LockerTable',
   props: {
@@ -60,7 +61,14 @@ export default {
       isPaginated: true,
       perPage: 20,
       currentPage: 1,
+      currentLocker: null,
       isEditModalActive: false
+    }
+  },
+  methods: {
+    edit(id) {
+      this.isEditModalActive = true
+      this.currentLocker = this.lockers.find(locker => locker.id === id)
     }
   },
   computed: {
