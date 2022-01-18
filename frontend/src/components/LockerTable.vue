@@ -1,10 +1,13 @@
 <template>
-  <b-table
-    :data="filterLockers"
-    :paginated="isPaginated"
-    :per-page="perPage"
-    :current-page.sync="currentPage"
-  >
+  <div>
+    <b-table
+        :data="filterLockers"
+        :striped="true"
+        :hoverable="true"
+        :paginated="isPaginated"
+        :per-page="perPage"
+        :current-page.sync="currentPage"
+      >
     <b-table-column field="id" label="ID" width="40" :td-attrs="columnTdAttrs" numeric v-slot="props">
       {{props.row.id}}
     </b-table-column>
@@ -24,9 +27,19 @@
       {{props.row.locker_group}}
     </b-table-column>
     <b-table-column :td-attrs="columnTdAttrs">
-      <b-button>Edit</b-button>
+      <b-button type="is-success" @click="isEditModalActive = true">Edit</b-button>
     </b-table-column>
   </b-table>
+  <b-modal v-model="isEditModalActive" :width="500">
+    <div class="card">
+      <div class="card-content">
+        <div class="content">
+          TEST
+        </div>
+      </div>
+    </div>
+  </b-modal>
+  </div>
 </template>
 <script>
 export default {
@@ -47,6 +60,7 @@ export default {
       isPaginated: true,
       perPage: 20,
       currentPage: 1,
+      isEditModalActive: false
     }
   },
   computed: {
