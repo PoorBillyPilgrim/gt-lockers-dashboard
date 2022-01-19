@@ -88,7 +88,7 @@
           <p>Code: {{ currentLocker.current_code }}</p>
         </section>
         <footer class="modal-card-foot">
-          <b-button type="is-success">
+          <b-button type="is-success" @click="save">
             Save
           </b-button>
           <b-button type="is-danger">
@@ -135,6 +135,14 @@ export default {
     edit(id) {
       this.isEditModalActive = true
       this.currentLocker = this.lockers.find(locker => locker.id === id)
+    },
+    save() {
+      this.$buefy.notification.open({
+        message: 'Locker info has been saved',
+        type: 'is-success',
+        position: 'is-top',
+        hasIcon: true
+      })
     }
   }
 }

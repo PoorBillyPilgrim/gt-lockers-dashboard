@@ -3,7 +3,7 @@
     <h1 class="is-size-2">
       Lockers
     </h1>
-    <b-tabs type="is-boxed">
+    <b-tabs type="is-boxed" size="is-medium">
       <template v-for="(tab,index) in tabs">
         <b-tab-item
           :key="index"
