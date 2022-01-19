@@ -2,7 +2,6 @@
   <div>
     <b-table
       :data="filterLockers"
-      :striped="true"
       :hoverable="true"
       :paginated="isPaginated"
       :per-page="perPage"
@@ -91,7 +90,7 @@
           <b-button type="is-success" @click="save">
             Save
           </b-button>
-          <b-button type="is-danger">
+          <b-button type="is-danger" @click="isEditModalActive = false">
             Cancel
           </b-button>
         </footer>
