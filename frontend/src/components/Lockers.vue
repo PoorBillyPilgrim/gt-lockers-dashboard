@@ -49,6 +49,7 @@ export default {
         data.forEach(locker => {
           locker.building = this.capitalize(locker.building)
           locker.locker_group = this.capitalize(locker.locker_group)
+          locker.locker_size = this.capitalize(locker.locker_size)
         })
         this.data = data
       } catch (err) {
@@ -57,6 +58,7 @@ export default {
     },
     capitalize(word) {
       word = word.split('_')
+      if (word[0][0] === undefined) return //
       return word.length === 1 ? 
         `${word[0][0].toUpperCase()}${word[0].substring(1)}` :
         `${word[0][0].toUpperCase()}${word[0].substring(1)} ${word[1][0].toUpperCase()}${word[1].substring(1)}`

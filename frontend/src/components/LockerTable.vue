@@ -26,6 +26,14 @@
       </b-table-column>
       <b-table-column
         v-slot="props"
+        field="locker_size"
+        label="Size"
+        searchable
+      >
+        {{ props.row.locker_size }}
+      </b-table-column>
+      <b-table-column
+        v-slot="props"
         field="current_code"
         label="Current Code"
         numeric
@@ -62,6 +70,13 @@
       >
         {{ props.row.locker_group }}
       </b-table-column>
+      <b-table-column 
+        v-slot="props"
+        field="locker_status"
+        label="Status"
+      >
+        {{props.row.locker_status}}
+      </b-table-column>
       <b-table-column v-slot="props">
         <b-button
           type="is-success"
@@ -83,8 +98,12 @@
           </p>
         </header>
         <section class="modal-card-body">
-          <p>Patron: {{ currentLocker.patron_name }}</p>
-          <p>Code: {{ currentLocker.current_code }}</p>
+          <b-field label="Patron Name">
+            <b-input :value="currentLocker.patron_name"></b-input>
+        </b-field>
+          <b-field label="Current Code">
+            <b-input :value="currentLocker.current_code" type="number" min="1000" max="9999"></b-input>
+          </b-field>
         </section>
         <footer class="modal-card-foot">
           <b-button type="is-success" @click="save">
