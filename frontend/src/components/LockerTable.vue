@@ -72,7 +72,7 @@
       >
         {{ props.row.locker_group }}
       </b-table-column>
-            <b-table-column
+      <b-table-column
         v-slot="props"
         field="locker_status"
         label="Locker Status"
@@ -89,46 +89,27 @@
       </b-table-column>
     </b-table>
 
-    <!--<LockerEditModal v-model="isEditModalActive" :currentLocker/>-->
-
     <b-modal
       v-model="isEditModalActive"
       has-modal-card
-      :locker="currentLocker"
     >
-      <div class="modal-card">
-        <header class="modal-card-head">
-          <p class="modal-card-title">
-            Locker #{{ currentLocker.locker_number }}, {{ currentLocker.building }}
-          </p>
-        </header>
-        <section class="modal-card-body">
-          <b-field label="Patron Name">
-            <b-input :value="currentLocker.patron_name"></b-input>
-          </b-field>
-          <b-field label="Current Code">
-            <b-input :value="currentLocker.current_code" type="number" min="1000" max="9999"></b-input>
-          </b-field>
-          <b-field label="Status">
-            <b-input :value="currentLocker.locker_status" type="textarea"></b-input>
-          </b-field>
-        </section>
-        <footer class="modal-card-foot">
-          <b-button type="is-success" @click="save">
-            Save
-          </b-button>
-          <b-button type="is-danger" @click="isEditModalActive = false">
-            Cancel
-          </b-button>
-        </footer>
-      </div>
+      <template #default="props">
+        <locker-edit-modal
+          :current-locker="currentLocker"
+          @close="props.close"
+        />
+      </template>
     </b-modal>
   </div>
 </template>
 <script>
+import LockerEditModal from '@/components/LockerEditModal.vue'
 
 export default {
   name: 'LockerTable',
+  components: {
+    LockerEditModal
+  },
   props: {
     lockers: {
       type: Array,
@@ -161,20 +142,10 @@ export default {
   },
   methods: {
     edit(id) {
-      this.isEditModalActive = true
       this.currentLocker = this.lockers.find(locker => locker.id === id)
-    },
-    save() {
-      this.isEditModalActive = false
-      this.$buefy.notification.open({
-        message: 'Locker info has been saved',
-        type: 'is-success',
-        position: 'is-top',
-        hasIcon: true,
-        indefinite: true
-      })
-      this.$root.$emit('locker-info-save')
+      this.isEditModalActive = true
     }
+
   }
 }
 </script>

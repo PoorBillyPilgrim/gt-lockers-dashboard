@@ -3,7 +3,10 @@
     <h1 class="is-size-2">
       Lockers
     </h1>
-    <b-tabs type="is-boxed" size="is-medium">
+    <b-tabs
+      type="is-boxed"
+      size="is-medium"
+    >
       <template v-for="(tab,index) in tabs">
         <b-tab-item
           :key="index"
@@ -12,7 +15,7 @@
           <LockerTable 
             :lockers="data"
             :group="tab.group"
-            :isLoading="isLoading"
+            :is-loading="isLoading"
           />
         </b-tab-item>
       </template>
