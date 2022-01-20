@@ -68,14 +68,14 @@
       <b-table-column
         v-slot="props"
         field="locker_group"
-        label="Locker Group"
+        label="Group"
       >
         {{ props.row.locker_group }}
       </b-table-column>
       <b-table-column
         v-slot="props"
         field="locker_status"
-        label="Locker Status"
+        label="Status"
       >
         {{ props.row.locker_status }}
       </b-table-column>
@@ -126,7 +126,7 @@ export default {
   data() {
     return {
       isPaginated: true,
-      perPage: 20,
+      perPage: 10,
       currentPage: 1,
       currentLocker: {},
       isEditModalActive: false

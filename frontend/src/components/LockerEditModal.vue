@@ -18,10 +18,15 @@
         />
       </b-field>
       <b-field label="Status">
-        <b-input
-          :value="currentLocker.locker_status"
-          type="textarea"
-        />
+        <b-select placeholder="Select a status">
+          <option 
+            v-for="(status,index) in statusOptions" 
+            :key="index"
+            :value="status"
+          >
+            {{ status }}
+          </option>
+        </b-select>
       </b-field>
     </section>
     <footer class="modal-card-foot">
@@ -47,6 +52,11 @@ export default {
     currentLocker: {
       type: Object,
       default: () => {}
+    }
+  },
+  data() {
+    return {
+      statusOptions: ['available', 'checked_out', 'disabled', 'needs_repair']
     }
   },
   methods: {
