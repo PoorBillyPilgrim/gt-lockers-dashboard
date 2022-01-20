@@ -12,6 +12,7 @@
           <LockerTable 
             :lockers="data"
             :group="tab.group"
+            :isLoading="isLoading"
           />
         </b-tab-item>
       </template>
@@ -41,10 +42,13 @@ export default {
   },
   created: function() {
     this.getLockers()
+    this.$root.$on('locker-info-save', () => this.getLockers())
   },
+
   methods: {
     async getLockers() {
       try {
+        this.isLoading = true
         let {data} = await axios.get('http://localhost:4000/lockers')
         data.forEach(locker => {
           locker.building = this.capitalize(locker.building)
@@ -52,6 +56,7 @@ export default {
           locker.locker_size = this.capitalize(locker.locker_size)
         })
         this.data = data
+        this.isLoading = false
       } catch (err) {
         console.error(err)
       }

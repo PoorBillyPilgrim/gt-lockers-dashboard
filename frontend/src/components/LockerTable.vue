@@ -2,6 +2,7 @@
   <div>
     <b-table
       :data="filterLockers"
+      :loading="isLoading"
       :hoverable="true"
       :paginated="isPaginated"
       :per-page="perPage"
@@ -136,11 +137,13 @@ export default {
     group: {
       type: String,
       default: 'all'
+    },
+    isLoading: {
+      type: Boolean
     }
   },
   data() {
     return {
-      isLoading: true,
       isPaginated: true,
       perPage: 20,
       currentPage: 1,
@@ -162,12 +165,15 @@ export default {
       this.currentLocker = this.lockers.find(locker => locker.id === id)
     },
     save() {
+      this.isEditModalActive = false
       this.$buefy.notification.open({
         message: 'Locker info has been saved',
         type: 'is-success',
         position: 'is-top',
-        hasIcon: true
+        hasIcon: true,
+        indefinite: true
       })
+      this.$root.$emit('locker-info-save')
     }
   }
 }
