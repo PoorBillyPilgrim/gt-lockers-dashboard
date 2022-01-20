@@ -77,11 +77,14 @@
         field="locker_status"
         label="Status"
       >
-        {{ props.row.locker_status }}
+        <span class="tag" :class="statusType(props.row.locker_status)">
+          {{ props.row.locker_status }}
+        </span>
       </b-table-column>
       <b-table-column v-slot="props">
         <b-button
-          type="is-success"
+          type="is-primary"
+          size="is-small"
           @click="edit(props.row.id)"
         >
           Edit
@@ -144,8 +147,11 @@ export default {
     edit(id) {
       this.currentLocker = this.lockers.find(locker => locker.id === id)
       this.isEditModalActive = true
+    },
+    statusType(status) {
+      if (status === 'available') return 'is-success'
+      return 'is-danger'
     }
-
   }
 }
 </script>
