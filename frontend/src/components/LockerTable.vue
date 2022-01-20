@@ -28,7 +28,8 @@
         v-slot="props"
         field="locker_size"
         label="Size"
-        searchable
+        width="50"
+        sortable
       >
         {{ props.row.locker_size }}
       </b-table-column>
@@ -70,12 +71,12 @@
       >
         {{ props.row.locker_group }}
       </b-table-column>
-      <b-table-column 
+            <b-table-column
         v-slot="props"
         field="locker_status"
-        label="Status"
+        label="Locker Status"
       >
-        {{props.row.locker_status}}
+        {{ props.row.locker_status }}
       </b-table-column>
       <b-table-column v-slot="props">
         <b-button
@@ -86,6 +87,9 @@
         </b-button>
       </b-table-column>
     </b-table>
+
+    <!--<LockerEditModal v-model="isEditModalActive" :currentLocker/>-->
+
     <b-modal
       v-model="isEditModalActive"
       has-modal-card
@@ -100,9 +104,12 @@
         <section class="modal-card-body">
           <b-field label="Patron Name">
             <b-input :value="currentLocker.patron_name"></b-input>
-        </b-field>
+          </b-field>
           <b-field label="Current Code">
             <b-input :value="currentLocker.current_code" type="number" min="1000" max="9999"></b-input>
+          </b-field>
+          <b-field label="Status">
+            <b-input :value="currentLocker.locker_status" type="textarea"></b-input>
           </b-field>
         </section>
         <footer class="modal-card-foot">

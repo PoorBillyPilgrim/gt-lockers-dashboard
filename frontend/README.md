@@ -1,5 +1,13 @@
 # frontend
 
+## Using the dashboard
+### locker status
+The status for a locker can be set as these values:
+- available -- available for check out to a patron
+- checked_out -- already checked out to a patron
+- disabled
+- needs_repair
+
 ## Project setup
 ```
 npm install
