@@ -80,6 +80,7 @@ const parseQueryString = (query, requiredKey) => {
 
 const getAvailableLocker = async (req, res, next) => {
   let sql = 'SELECT * FROM lockers WHERE locker_status="available" AND locker_group=?'
+  let locker_size
   const validLockerGroups = ['graduate', 'faculty', 'general']
   const validLockerSizes = ['cubby', 'mid', 'full', '']
   try {
@@ -87,13 +88,12 @@ const getAvailableLocker = async (req, res, next) => {
     if (!query.isValid) {
       throw new AppError(query.errorMsg, 404)
     }
-    res.send(query)
-    
+    const {locker_group} = query.params
     // add locker_size if value present
-    //sql += locker_size ? ' AND locker_size=? LIMIT 1' : ' LIMIT 1'
-    //const [rows] = await pool.query(sql, [locker_group, locker_size])
+    sql += locker_size ? ' AND locker_size=? LIMIT 1' : ' LIMIT 1'
+    const [rows] = await pool.query(sql, [locker_group])
 
-    //res.status(200).send(rows)
+    res.status(200).send(rows)
   } catch (err) {
     next(err)
   }
