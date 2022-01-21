@@ -7,7 +7,7 @@ const {AppError, catchAsyncErrors} = require('../errors.js')
 
 router.get('/', catchAsyncErrors(getAll))
 
-const isValidLockerGroup = (query) => {
+/*const isValidLockerGroup = (query) => {
   if (query === undefined || !['graduate', 'faculty', 'general'].includes(query.toLowerCase())) {
     return false
   }
@@ -20,23 +20,80 @@ const isValidLockerSize = (query) => {
   }
   return true
 }
+*/
+const isValid = (query, acceptedValues, isRequired) => {
+  
+  // required keys cannot be undefined
+  if (isRequired) {
+    if (query === undefined || !acceptedValues.includes(query.toLowerCase())) {
+      return false
+    }
+  }
 
+  if (!acceptedValues.includes(query.toLowerCase())) {
+    return false
+  }
+
+  return true
+}
+
+const parseQueryString = (query, requiredKey) => {
+  
+  // parse query string and see if requiredKey is present
+  // if so, then no error message is created
+
+  let errorMsg
+  let isValid = true
+
+  if (!query.hasOwnProperty(requiredKey)) {
+    errorMsg = `${requiredKey} must be present in query string`
+    isValid = false
+  }
+  
+
+  /*if (query === {}) {
+    errorMsg = 'Query parameters must be provided'
+  }
+
+  for (let param in query) {
+    if (param !== 'locker_group' || param !== 'locker_size') {
+      errorMsg = 'Query parameters must be locker_size or locker_group'
+      break
+    } else if (param === 'locker_group') {
+      if (!isValidLockerGroup(param)) {
+        errorMsg = 'No valid locker_group value was provided'
+        break
+      }
+    } else if (param === 'locker_size') {
+      if (!isValidLockerSize(param)) {
+        errorMsg = 'No valid locker_size value was provided'
+        break
+      }
+    }
+  }*/
+  return {
+    params: query,
+    errorMsg: errorMsg,
+    isValid: isValid
+  }
+}
 
 const getAvailableLocker = async (req, res, next) => {
   let sql = 'SELECT * FROM lockers WHERE locker_status="available" AND locker_group=?'
-  const {locker_group, locker_size} = req.query
-  sql += locker_size ? ' AND locker_size=? LIMIT 1' : 'LIMIT 1'
-  
+  const validLockerGroups = ['graduate', 'faculty', 'general']
+  const validLockerSizes = ['cubby', 'mid', 'full', '']
   try {
-    if (!isValidLockerGroup(locker_group)) {
-      throw new AppError('No valid group name was provided', 404)
+    const query = parseQueryString(req.query, 'locker_group')
+    if (!query.isValid) {
+      throw new AppError(query.errorMsg, 404)
     }
-    if (!isValidLockerSize(locker_size)) {
-      throw new AppError('No valid locker size was provided', 404)
-    }
-    const [rows] = await pool.query(sql, [locker_group, locker_size])
+    res.send(query)
+    
+    // add locker_size if value present
+    //sql += locker_size ? ' AND locker_size=? LIMIT 1' : ' LIMIT 1'
+    //const [rows] = await pool.query(sql, [locker_group, locker_size])
 
-    res.status(200).send(rows)
+    //res.status(200).send(rows)
   } catch (err) {
     next(err)
   }
