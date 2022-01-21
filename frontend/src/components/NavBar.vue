@@ -2,10 +2,10 @@
   <b-navbar>
     <template #start>
       <b-navbar-item>
-        TEST
+        Dashboard
       </b-navbar-item>
       <b-navbar-item>
-        TEST
+        Find Available Locker
       </b-navbar-item>
     </template>
   </b-navbar>
