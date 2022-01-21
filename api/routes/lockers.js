@@ -79,9 +79,11 @@ const parseQueryString = (query, requiredKey) => {
 
 const getAvailableLocker = async (req, res, next) => {
   let sql = 'SELECT * FROM lockers WHERE locker_status="available" AND locker_group=?'
-  let locker_size
-  const validLockerGroups = ['graduate', 'faculty', 'general']
-  const validLockerSizes = ['cubby', 'mid', 'full', '']
+ 
+  const validValues = {
+    locker_group: ['graduate', 'faculty', 'general'],
+    locker_size: ['cubby', 'mid', 'full', '']
+  }
   try {
     const queryString = parseQueryString(req.query, 'locker_group')
     if (!queryString.isValid) {
@@ -97,10 +99,14 @@ const getAvailableLocker = async (req, res, next) => {
       if (Array.isArray(queries[query])) {
         throw new AppError(`Multiple values for ${query} are not accepted`, 404)
       }
+      if (!isValidValue(queries[query], validValues[query])) {
+        throw new AppError(`No valid ${query} was provided`, 404)
+      }
     }
+    const {locker_group, locker_size} = queries
     // add locker_size if value present
     sql += locker_size ? ' AND locker_size=? LIMIT 1' : ' LIMIT 1'
-    const [rows] = await pool.query(sql, [locker_group])
+    const [rows] = await pool.query(sql, [locker_group, locker_size])
 
     res.status(200).send(rows)
   } catch (err) {
