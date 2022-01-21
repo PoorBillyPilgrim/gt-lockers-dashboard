@@ -36,7 +36,7 @@
       <b-table-column
         v-slot="props"
         field="current_code"
-        label="Code dsf"
+        label="Code"
         numeric
       >
         {{ props.row.current_code }}
