@@ -30,14 +30,13 @@
         field="locker_size"
         label="Size"
         width="50"
-        sortable
       >
         {{ props.row.locker_size }}
       </b-table-column>
       <b-table-column
         v-slot="props"
         field="current_code"
-        label="Current Code"
+        label="Code"
         numeric
       >
         {{ props.row.current_code }}
