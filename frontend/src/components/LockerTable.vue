@@ -77,7 +77,10 @@
         field="locker_status"
         label="Status"
       >
-        <span class="tag" :class="statusType(props.row.locker_status)">
+        <span 
+          class="tag" 
+          :class="statusType(props.row.locker_status)"
+        >
           {{ props.row.locker_status }}
         </span>
       </b-table-column>
