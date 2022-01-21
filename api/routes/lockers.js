@@ -7,14 +7,34 @@ const {AppError, catchAsyncErrors} = require('../errors.js')
 
 router.get('/', catchAsyncErrors(getAll))
 
+const isValidLockerGroup = (query) => {
+  if (query === undefined || !['graduate', 'faculty', 'general'].includes(query.toLowerCase())) {
+    return false
+  }
+  return true
+}
+
+const isValidLockerSize = (query) => {
+  if (!['cubby', 'mid', 'full', ''].includes(query.toLowerCase())) {
+    return false
+  }
+  return true
+}
+
+
 const getAvailableLocker = async (req, res, next) => {
-  const {locker_group} = req.query
-  const sql = 'SELECT * FROM lockers WHERE locker_status="available" AND locker_group=? LIMIT 1'
+  let sql = 'SELECT * FROM lockers WHERE locker_status="available" AND locker_group=?'
+  const {locker_group, locker_size} = req.query
+  sql += locker_size ? ' AND locker_size=? LIMIT 1' : 'LIMIT 1'
+  
   try {
-    if (!['graduate', 'faculty', 'general'].includes(locker_group.toLowerCase()) || locker_group.toLowerCase() === undefined) {
+    if (!isValidLockerGroup(locker_group)) {
       throw new AppError('No valid group name was provided', 404)
     }
-    const [rows] = await pool.query(sql, [locker_group])
+    if (!isValidLockerSize(locker_size)) {
+      throw new AppError('No valid locker size was provided', 404)
+    }
+    const [rows] = await pool.query(sql, [locker_group, locker_size])
 
     res.status(200).send(rows)
   } catch (err) {
