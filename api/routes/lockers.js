@@ -21,14 +21,14 @@ const isValidLockerSize = (query) => {
   return true
 }
 */
-const isValid = (query, acceptedValues, isRequired) => {
+const isValidValue = (query, acceptedValues/*, isRequired*/) => {
   
   // required keys cannot be undefined
-  if (isRequired) {
+  /*if (isRequired) {
     if (query === undefined || !acceptedValues.includes(query.toLowerCase())) {
       return false
     }
-  }
+  }*/
 
   if (!acceptedValues.includes(query.toLowerCase())) {
     return false
@@ -50,7 +50,6 @@ const parseQueryString = (query, requiredKey) => {
     isValid = false
   }
   
-
   /*if (query === {}) {
     errorMsg = 'Query parameters must be provided'
   }
@@ -88,7 +87,11 @@ const getAvailableLocker = async (req, res, next) => {
     if (!query.isValid) {
       throw new AppError(query.errorMsg, 404)
     }
+    console.log(query)
     const {locker_group} = query.params
+    if (!isValidValue(locker_group, validLockerGroups)) {
+      throw new AppError(`No valid locker_group was provided`, 404)
+    }
     // add locker_size if value present
     sql += locker_size ? ' AND locker_size=? LIMIT 1' : ' LIMIT 1'
     const [rows] = await pool.query(sql, [locker_group])
