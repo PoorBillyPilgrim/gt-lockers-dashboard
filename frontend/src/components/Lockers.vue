@@ -45,7 +45,7 @@ export default {
   },
   created: function() {
     this.getLockers()
-    this.$root.$on('locker-info-save', () => this.getLockers())
+    this.$root.$on('update', () => this.getLockers())
   },
 
   methods: {

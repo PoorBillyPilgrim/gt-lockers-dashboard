@@ -69,7 +69,7 @@ export default {
         hasIcon: true,
         indefinite: true
       })
-      this.$root.$emit('locker-info-save')
+      this.$root.$emit('update')
     }
   }
 
