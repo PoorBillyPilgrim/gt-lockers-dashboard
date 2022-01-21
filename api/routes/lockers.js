@@ -45,7 +45,7 @@ const parseQueryString = (query, requiredKey) => {
   let errorMsg
   let isValid = true
 
-  if (!query.hasOwnProperty(requiredKey)) {
+  if (query === {} || !query.hasOwnProperty(requiredKey)) {
     errorMsg = `${requiredKey} must be present in query string`
     isValid = false
   }
