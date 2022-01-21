@@ -29,7 +29,6 @@ const logError = (err, req, res, next) => {
 // Catch errors from async functions and pass them along to sendErrorRes middleware
 const catchAsyncErrors = fn => (req, res, next) => fn(req, res, next).catch(next);
 
-
 module.exports = {
     AppError,
     sendErrorRes,
