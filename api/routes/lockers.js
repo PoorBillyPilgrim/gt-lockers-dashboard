@@ -71,7 +71,7 @@ const parseQueryString = (query, requiredKey) => {
     }
   }*/
   return {
-    params: query,
+    queries: query,
     errorMsg: errorMsg,
     isValid: isValid
   }
@@ -83,14 +83,20 @@ const getAvailableLocker = async (req, res, next) => {
   const validLockerGroups = ['graduate', 'faculty', 'general']
   const validLockerSizes = ['cubby', 'mid', 'full', '']
   try {
-    const query = parseQueryString(req.query, 'locker_group')
-    if (!query.isValid) {
-      throw new AppError(query.errorMsg, 404)
+    const queryString = parseQueryString(req.query, 'locker_group')
+    if (!queryString.isValid) {
+      throw new AppError(queryString.errorMsg, 404)
     }
-    console.log(query)
-    const {locker_group} = query.params
-    if (!isValidValue(locker_group, validLockerGroups)) {
+    console.log(queryString)
+    /*const {locker_group} = query.queries
+    if (Array.isArray(locker_group) || !isValidValue(locker_group, validLockerGroups)) {
       throw new AppError(`No valid locker_group was provided`, 404)
+    }*/
+    const queries = queryString.queries
+    for (let query in queries) {
+      if (Array.isArray(queries[query])) {
+        throw new AppError(`Multiple values for ${query} are not accepted`, 404)
+      }
     }
     // add locker_size if value present
     sql += locker_size ? ' AND locker_size=? LIMIT 1' : ' LIMIT 1'
