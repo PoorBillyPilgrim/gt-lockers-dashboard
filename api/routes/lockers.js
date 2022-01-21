@@ -1,21 +1,28 @@
 const express = require('express')
 const router = express.Router()
 const pool = require('../database.js')
+const {getAll} = require('../controllers/queries.js')
 const {AppError, catchAsyncErrors} = require('../errors.js')
 
 
-const getAll = async (req, res, next) => {
-  // move all this to controlers/
+router.get('/', catchAsyncErrors(getAll))
+
+const getAvailableLocker = async (req, res, next) => {
+  const {locker_group} = req.query
+  const sql = 'SELECT * FROM lockers WHERE locker_status="available" AND locker_group=? LIMIT 1'
   try {
-    const [rows] = await pool.query('SELECT * FROM lockers')
+    if (!['graduate', 'faculty', 'general'].includes(locker_group.toLowerCase()) || locker_group.toLowerCase() === undefined) {
+      throw new AppError('No valid group name was provided', 404)
+    }
+    const [rows] = await pool.query(sql, [locker_group])
+
     res.status(200).send(rows)
   } catch (err) {
     next(err)
   }
 }
 
-router.get('/', catchAsyncErrors(getAll))
-
+router.get('/available', catchAsyncErrors(getAvailableLocker))
 
 const getLockerGroup = async (req, res, next) => {
   const sql = 'SELECT * FROM lockers WHERE locker_group = ?'
