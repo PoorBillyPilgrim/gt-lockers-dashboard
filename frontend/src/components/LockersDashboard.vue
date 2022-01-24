@@ -12,7 +12,6 @@
           :lockers="lockers"
           :group="tab.group"
           :is-loading="isLoading"
-          :is-edit-modal-active="isEditModalActive"
         />
       </b-tab-item>
     </template>
@@ -30,16 +29,19 @@ export default {
       type: Boolean,
       default: true
     },
-    tabs: {
-      type: Array,
-      default: () => []
-    },
     lockers: {
       type: Array,
       default: () => []
-    },
-    isEditModalActive: {
-      type: Boolean
+    }
+  },
+  data() {
+    return {
+      tabs: [
+        {group: 'All'},
+        {group: 'General'},
+        {group: 'Graduate'},
+        {group: 'Faculty'}
+      ],
     }
   }
 }

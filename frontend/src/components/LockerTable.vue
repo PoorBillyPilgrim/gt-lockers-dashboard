@@ -93,28 +93,37 @@
         </b-button>
       </b-table-column>
     </b-table>
+    
+    <b-modal
+      v-model="isEditModalActive"
+      has-modal-card
+    >
+      <template #default="props">
+        <locker-edit-modal
+          :current-locker="currentLocker"
+          @close="props.close"
+        />
+      </template>
+    </b-modal>
   </div>
 </template>
 <script>
+import LockerEditModal from '@/components/LockerEditModal.vue'
 export default {
   name: 'LockerTable',
+  components: {
+    LockerEditModal
+  },
   props: {
     lockers: {
       type: Array,
       default: () => []
-    },
-    currentLocker: {
-      type: Object,
-      default: () => {}
     },
     group: {
       type: String,
       default: 'all'
     },
     isLoading: {
-      type: Boolean
-    },
-    isEditModalActive: {
       type: Boolean
     }
   },
@@ -123,6 +132,8 @@ export default {
       isPaginated: true,
       perPage: 10,
       currentPage: 1,
+      currentLocker: {},
+      isEditModalActive: false
     }
   },
   computed: {
@@ -135,7 +146,9 @@ export default {
   },
   methods: {
     edit(id) {
-      this.$root.$emit('edit', id)
+      // this.$root.$emit('edit', id)
+      this.currentLocker = this.lockers.find(locker => locker.id === id)
+      this.isEditModalActive = true
     },
     statusType(status) {
       if (status === 'available') return 'is-success'

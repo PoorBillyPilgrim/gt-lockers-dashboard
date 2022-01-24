@@ -5,55 +5,24 @@
     </h1>
     <router-view 
       :lockers="lockers"
-      :current-locker="currentLocker"
-      :tabs="tabs"
       :is-loading="isLoading"
-      :is-edit-modal-active="isEditModalActive"
     />
-    
-    <b-modal
-      v-model="isEditModalActive"
-      has-modal-card
-    >
-      <template #default="props">
-        <locker-edit-modal
-          :current-locker="currentLocker"
-          @close="props.close"
-        />
-      </template>
-    </b-modal>
   </div>
 </template>
 <script>
 import axios from 'axios'
-import LockerEditModal from '@/components/LockerEditModal.vue'
 
 export default {
   name: 'Lockers',
-  components: {
-    LockerEditModal
-  },
   data() {
     return {
       isLoading: true,
-      lockers: [],
-      currentLocker: {},
-      tabs: [
-        {group: 'All'},
-        {group: 'General'},
-        {group: 'Graduate'},
-        {group: 'Faculty'}
-      ],
-      isEditModalActive: false
+      lockers: []
     }
   },
   created: function() {
     this.getLockers()
     this.$root.$on('update', () => this.getLockers())
-    this.$root.$on('edit', (id) => {
-      this.currentLocker = this.lockers.find(locker => locker.id === id)
-      this.isEditModalActive = true
-    })
   },
   methods: {
     async getLockers() {
