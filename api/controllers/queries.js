@@ -32,7 +32,18 @@ const getAvailableLocker = async (req, res, next) => {
   }
 }
 
+const getSchema = async (req, res, next) => {
+  
+    try {
+ 
+      res.status(200).send(lockerSchema)
+    } catch (err) {
+      next(err)
+    }
+  }
+
 module.exports = {
   getAll,
-  getAvailableLocker
+  getAvailableLocker,
+  getSchema
 }
