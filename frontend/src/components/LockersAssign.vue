@@ -9,11 +9,13 @@
     </div>
     <div v-else>
       <b-field grouped>
-        <b-select v-for="(filter,key,filterIndex) in findAvailableLocker" :key="filterIndex" :placeholder="`Select a ${key.replace('_', ' ')}`">
-          <option v-for="(option,optionKey) in filter" :key="optionKey" :value="option">
-            {{option}}
-          </option>
-        </b-select>
+        <b-field v-for="(filter,key,filterIndex) in findAvailableLocker" :key="filterIndex" :label="key.replace('_', ' ')">
+          <b-select  :placeholder="`Select a ${key.replace('_', ' ')}`">
+            <option v-for="(option,optionKey) in filter" :key="optionKey" :value="option">
+              {{option}}
+            </option>
+          </b-select>
+        </b-field>
       </b-field>
     </div>
   </div>
