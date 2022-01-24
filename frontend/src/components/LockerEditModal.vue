@@ -18,7 +18,7 @@
         />
       </b-field>
       <b-field label="Status">
-        <b-select placeholder="Select a status">
+        <b-select :placeholder="currentLocker.locker_status">
           <option 
             v-for="(status,index) in statusOptions" 
             :key="index"
