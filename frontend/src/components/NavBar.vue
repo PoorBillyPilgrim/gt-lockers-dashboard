@@ -1,10 +1,16 @@
 <template>
   <b-navbar>
     <template #start>
-      <b-navbar-item>
+      <b-navbar-item
+        tag="router-link"
+        :to="{path: '/'}"
+      >
         Dashboard
       </b-navbar-item>
-      <b-navbar-item>
+      <b-navbar-item
+        tag="router-link"
+        :to="{path: '/assign'}"
+      >
         Find Available Locker
       </b-navbar-item>
     </template>

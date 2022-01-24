@@ -1,19 +1,17 @@
 <template>
   <div id="app">
     <NavBar />
-    <Lockers />
+    <router-view />
   </div>
 </template>
 
 <script>
 import NavBar from '@/components/NavBar.vue'
-import Lockers from '@/components/Lockers.vue'
 
 export default {
   name: 'App',
   components: {
-    NavBar,
-    Lockers
+    NavBar
   }
 }
 </script>
