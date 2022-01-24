@@ -1,6 +1,6 @@
 const express = require('express')
 const config = require('./config.js')
-const {sendErrorRes, logError} = require('./errors.js')
+const { sendErrorRes, logError } = require('./errors.js')
 
 const cors = require('cors')
 const helmet = require('helmet')
@@ -18,17 +18,16 @@ app.get('/', (req, res, next) => {
 })
 app.use('/lockers', require('./routes/lockers.js'))
 app.get('/test-error', (req, res, next) => {
-  let testErr = new Error('test error')
+  const testErr = new Error('test error')
   testErr.statusCode = 404
   next(testErr)
 })
 app.get('*', (req, res, next) => {
   // change this to redirect to an error page
-  
-  let allErr = new Error('resource not found')
+
+  const allErr = new Error('resource not found')
   allErr.statusCode = 301
   next(allErr)
-
 })
 
 // error handling is placed after routes have been set
