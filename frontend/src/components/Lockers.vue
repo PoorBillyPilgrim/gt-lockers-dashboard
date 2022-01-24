@@ -2,7 +2,9 @@
   <div class="container is-max-widescreen mt-5">
     <router-view 
       :lockers="lockers"
+      :schema="schema"
       :is-loading="isLoading"
+      :is-schema-loading="isSchemaLoading"
     />
   </div>
 </template>
@@ -14,11 +16,14 @@ export default {
   data() {
     return {
       isLoading: true,
-      lockers: []
+      isSchemaLoading: true,
+      lockers: [],
+      schema: []
     }
   },
   created: function() {
     this.getLockers()
+    this.getSchema()
     this.$root.$on('update', () => this.getLockers())
   },
   methods: {
@@ -33,6 +38,16 @@ export default {
         })
         this.lockers = data
         this.isLoading = false
+      } catch (err) {
+        console.error(err)
+      }
+    },
+    async getSchema() {
+      try {
+        this.isSchemaLoading = true
+        let {data} = await axios.get('http://localhost:4000/lockers/schema')
+        this.schema = data
+        this.isSchemaLoading = false
       } catch (err) {
         console.error(err)
       }
