@@ -11,8 +11,16 @@ Vue.use(Buefy)
 Vue.config.productionTip = false
 
 const routes = [
-  { path: '/', component: LockersDashboard },
-  { path: '/assign', component: LockersAssign },
+  { 
+    path: '/', 
+    component: LockersDashboard,
+    props: { title: "Dashboard"}
+  },
+  { 
+    path: '/assign',
+    component: LockersAssign,
+    props: { title: "Find Available Locker"}
+  },
   { path: '*', redirect: '/' }
 ]
 

@@ -1,8 +1,5 @@
 <template>
-  <div class="container">
-    <h1 class="is-size-2">
-      Lockers
-    </h1>
+  <div class="container is-max-widescreen mt-5">
     <router-view 
       :lockers="lockers"
       :is-loading="isLoading"
