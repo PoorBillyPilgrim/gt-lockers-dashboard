@@ -1,5 +1,3 @@
-const { parse } = require("dotenv")
-
 const isValidValue = (query, acceptedValues) => {
   
     if (!acceptedValues.includes(query.toLowerCase())) {
