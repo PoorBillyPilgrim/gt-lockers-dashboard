@@ -3,59 +3,58 @@
     <h1 class="is-size-2">
       Lockers
     </h1>
-    <router-view :lockers="data" :tabs="tabs" :is-loading="isLoading"/>
-    <!--<LockersDashboard
-      :lockers="data"
+    <router-view 
+      :lockers="lockers"
+      :current-locker="currentLocker"
       :tabs="tabs"
       :is-loading="isLoading"
-    />-->
-    <!--<b-tabs
-      type="is-boxed"
-      size="is-medium"
+      :is-edit-modal-active="isEditModalActive"
+    />
+    
+    <b-modal
+      v-model="isEditModalActive"
+      has-modal-card
     >
-      <template v-for="(tab,index) in tabs">
-        <b-tab-item
-          :key="index"
-          :label="tab.group"
-        >
-          <LockerTable 
-            :lockers="data"
-            :group="tab.group"
-            :is-loading="isLoading"
-          />
-        </b-tab-item>
+      <template #default="props">
+        <locker-edit-modal
+          :current-locker="currentLocker"
+          @close="props.close"
+        />
       </template>
-    </b-tabs>-->
+    </b-modal>
   </div>
 </template>
 <script>
 import axios from 'axios'
-//import LockerTable from '@/components/LockerTable.vue'
-//import LockersDashboard from '@/components/LockersDashboard.vue'
-
+import LockerEditModal from '@/components/LockerEditModal.vue'
 
 export default {
   name: 'Lockers',
   components: {
-    //LockersDashboard
+    LockerEditModal
   },
   data() {
     return {
       isLoading: true,
-      data: [],
+      lockers: [],
+      currentLocker: {},
       tabs: [
         {group: 'All'},
         {group: 'General'},
         {group: 'Graduate'},
         {group: 'Faculty'}
-      ]
+      ],
+      isEditModalActive: false
     }
   },
   created: function() {
     this.getLockers()
     this.$root.$on('update', () => this.getLockers())
+    this.$root.$on('edit', (id) => {
+      this.currentLocker = this.lockers.find(locker => locker.id === id)
+      this.isEditModalActive = true
+    })
   },
-
   methods: {
     async getLockers() {
       try {
@@ -66,7 +65,7 @@ export default {
           locker.locker_group = this.capitalize(locker.locker_group)
           locker.locker_size = this.capitalize(locker.locker_size)
         })
-        this.data = data
+        this.lockers = data
         this.isLoading = false
       } catch (err) {
         console.error(err)

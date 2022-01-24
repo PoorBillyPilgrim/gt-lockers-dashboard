@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-//import Lockers from '@/components/Lockers.vue'
 import LockersDashboard from '@/components/LockersDashboard.vue'
 import LockersAssign from '@/components/LockersAssign.vue'
 import Buefy from 'buefy'
