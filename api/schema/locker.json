@@ -1,0 +1,11 @@
+{
+    "locker_number": "",
+    "locker_size": ["", "cubby", "mid", "full"],
+    "locker_group": ["general", "graduate", "faculty", "clp"],
+    "building": ["crosland", "price_gilbert", "clough"],
+    "floor": [0, 1, 2, 3, 4, 5, 6],
+    "patron_name": "",
+    "previous_code": "",
+    "current_code": "",
+    "locker_status": ["available", "checked_out", "disabled", "needs_repair"]
+}
