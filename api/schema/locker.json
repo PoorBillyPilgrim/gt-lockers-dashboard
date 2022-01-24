@@ -7,5 +7,5 @@
     "patron_name": "",
     "previous_code": "",
     "current_code": "",
-    "locker_status": ["available", "checked_out", "disabled", "needs_repair"]
+    "locker_status": ["available", "unavailable", "checked_out", "disabled", "needs_repair"]
 }
