@@ -1,6 +1,11 @@
 <template>
   <div>
     <h1 class="title">{{ title }}</h1>
+    <b-field grouped>
+      <b-select placeholder="Select a locker group">
+      </b-select>
+      <b-select placeholder="Select a locker size"></b-select>
+    </b-field>
   </div>
 </template>
 <script>
