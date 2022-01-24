@@ -3,7 +3,13 @@
     <h1 class="is-size-2">
       Lockers
     </h1>
-    <b-tabs
+    <router-view :lockers="data" :tabs="tabs" :is-loading="isLoading"/>
+    <!--<LockersDashboard
+      :lockers="data"
+      :tabs="tabs"
+      :is-loading="isLoading"
+    />-->
+    <!--<b-tabs
       type="is-boxed"
       size="is-medium"
     >
@@ -19,17 +25,19 @@
           />
         </b-tab-item>
       </template>
-    </b-tabs>
+    </b-tabs>-->
   </div>
 </template>
 <script>
 import axios from 'axios'
-import LockerTable from '@/components/LockerTable.vue'
+//import LockerTable from '@/components/LockerTable.vue'
+//import LockersDashboard from '@/components/LockersDashboard.vue'
+
 
 export default {
   name: 'Lockers',
   components: {
-    LockerTable
+    //LockersDashboard
   },
   data() {
     return {

@@ -1,5 +1,9 @@
 <template>
-  <b-navbar :shadow="true" :spaced="true" :centered="true">
+  <b-navbar
+    :shadow="true"
+    :spaced="true"
+    :centered="true"
+  >
     <template #start>
       <b-navbar-item
         tag="router-link"
