@@ -1,4 +1,5 @@
 const pool = require('../database.js')
+const lockerSchema = require('../schema/locker.json')
 const parseQueryString = require('../services/parseQueryString')
 const {AppError} = require('../errors.js')
 
@@ -17,11 +18,12 @@ const getAvailableLocker = async (req, res, next) => {
     try {
       let sql = 'SELECT * FROM lockers WHERE locker_status="available" AND locker_group=?'
    
-      const validValues = {
+      /*const validValues = {
         locker_group: ['graduate', 'faculty', 'general'],
         locker_size: ['cubby', 'mid', 'full', '']
-      }
-      const queryString = parseQueryString(req.query, 'locker_group', validValues)
+      }*/
+
+      const queryString = parseQueryString(req.query, 'locker_group', lockerSchema)
       if (!queryString.isValid) {
         throw new AppError(queryString.errorMsg, 404)
       }
