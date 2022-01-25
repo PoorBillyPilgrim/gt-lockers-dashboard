@@ -4,7 +4,6 @@
       :lockers="lockers"
       :schema="schema"
       :is-loading="isLoading"
-      :is-schema-loading="isSchemaLoading"
     />
   </div>
 </template>
@@ -17,7 +16,12 @@ export default {
     return {
       isLoading: true,
       lockers: [],
-      schema: []
+      schema: [],
+      urls: [
+        'http://localhost:4000/lockers',
+        'http://localhost:4000/lockers/schema'
+      ],
+      requests: []
     }
   },
   created: function() {
@@ -27,7 +31,8 @@ export default {
   methods: {
     async getLockerData() {
       try {
-        const [lockers, schema] = await Promise.all([this.getData('http://localhost:4000/lockers'), this.getData('http://localhost:4000/lockers/schema')])
+        this.makeRequests()
+        const [lockers, schema] = await Promise.all(this.requests)
         this.parseLockers(lockers)
         this.schema = schema
         this.isLoading = false
@@ -42,6 +47,11 @@ export default {
       } catch (err) {
         console.error(err)
       }
+    },
+    makeRequests() {
+      this.urls.forEach(url => {
+        this.requests.push(this.getData(url))
+      })
     },
     parseLockers(lockers) {
       lockers.forEach(locker => {
