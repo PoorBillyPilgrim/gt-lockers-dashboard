@@ -1,6 +1,7 @@
 <template>
   <div>
     <b-table
+      class="box"
       :data="filterLockers"
       :loading="isLoading"
       :hoverable="true"
@@ -159,5 +160,4 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-    
 </style>

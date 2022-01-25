@@ -5,14 +5,25 @@
     </h1>
 
     <div v-if="isSchemaLoading">
-      <b-loading v-model="isSchemaLoading" :is-full-page="true"></b-loading>
+      <b-loading
+        v-model="isSchemaLoading"
+        :is-full-page="true"
+      />
     </div>
     <div v-else>
       <b-field grouped>
-        <b-field v-for="(filter,key,filterIndex) in findAvailableLocker" :key="filterIndex" :label="key.replace('_', ' ')">
-          <b-select  :placeholder="`Select a ${key.replace('_', ' ')}`">
-            <option v-for="(option,optionKey) in filter" :key="optionKey" :value="option">
-              {{option}}
+        <b-field
+          v-for="(filter,key,filterIndex) in findAvailableLocker"
+          :key="filterIndex"
+          :label="key.replace('_', ' ')"
+        >
+          <b-select :placeholder="`Select a ${key.replace('_', ' ')}`">
+            <option
+              v-for="(option,optionKey) in filter"
+              :key="optionKey"
+              :value="option"
+            >
+              {{ option }}
             </option>
           </b-select>
         </b-field>

@@ -98,6 +98,9 @@ $link: $primary;
 $link-invert: $primary-invert;
 $link-focus-border: $primary;
 
+// Box styling
+$box-padding: 1rem;
+
 // Import Bulma and Buefy styles
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
