@@ -18,9 +18,8 @@
                 v-for="(total,status,statusIdx) in totals"
                 :key="statusIdx"
               >
-                {{status}}: {{total}}
+                {{ status }}: <b-tag :type="statusType(status)">{{ total }}</b-tag>
               </p>
-    
             </div>
             <LockerTable
               class="column"
