@@ -75,6 +75,7 @@
         v-slot="props"
         field="locker_status"
         label="Status"
+        sortable
       >
         <span 
           class="tag" 
