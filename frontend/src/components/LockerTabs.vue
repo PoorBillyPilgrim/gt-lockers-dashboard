@@ -7,9 +7,9 @@
       type="is-boxed"
       size="is-medium"
     >
-      <div v-if="isSchemaLoading && isLoading">
+      <div v-if="isLoading">
         <b-loading
-          v-model="isSchemaLoading"
+          v-model="isLoading"
           :is-full-page="true"
         />
       </div>
@@ -64,10 +64,6 @@ export default {
       default: 'Lockers'
     },
     isLoading: {
-      type: Boolean,
-      default: true
-    },
-    isSchemaLoading: {
       type: Boolean,
       default: true
     },

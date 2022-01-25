@@ -16,41 +16,40 @@ export default {
   data() {
     return {
       isLoading: true,
-      isSchemaLoading: true,
       lockers: [],
       schema: []
     }
   },
   created: function() {
-    this.getLockers()
-    this.getSchema()
+    this.getLockerData()
     this.$root.$on('update', () => this.getLockers())
   },
   methods: {
-    async getLockers() {
+    async getLockerData() {
       try {
-        this.isLoading = true
-        let {data} = await axios.get('http://localhost:4000/lockers')
-        data.forEach(locker => {
-          locker.building = this.capitalize(locker.building)
-          locker.locker_group = this.capitalize(locker.locker_group)
-          locker.locker_size = this.capitalize(locker.locker_size)
-        })
-        this.lockers = data
+        const [lockers, schema] = await Promise.all([this.getData('http://localhost:4000/lockers'), this.getData('http://localhost:4000/lockers/schema')])
+        this.parseLockers(lockers)
+        this.schema = schema
         this.isLoading = false
       } catch (err) {
         console.error(err)
       }
     },
-    async getSchema() {
+    async getData(url) {
       try {
-        this.isSchemaLoading = true
-        let {data} = await axios.get('http://localhost:4000/lockers/schema')
-        this.schema = data
-        this.isSchemaLoading = false
+        let {data} = await axios.get(url)
+        return data
       } catch (err) {
         console.error(err)
       }
+    },
+    parseLockers(lockers) {
+      lockers.forEach(locker => {
+        locker.building = this.capitalize(locker.building)
+        locker.locker_group = this.capitalize(locker.locker_group)
+        locker.locker_size = this.capitalize(locker.locker_size)
+      })
+      this.lockers = lockers
     },
     capitalize(word) {
       word = word.split('_')

@@ -4,9 +4,9 @@
       {{ title }}
     </h1>
 
-    <div v-if="isSchemaLoading">
+    <div v-if="isLoading">
       <b-loading
-        v-model="isSchemaLoading"
+        v-model="isLoading"
         :is-full-page="true"
       />
     </div>
@@ -38,10 +38,6 @@ export default {
     title: {
       type: String,
       default: 'Lockers'
-    },
-    isSchemaLoading: {
-      type: Boolean,
-      default: true
     },
     lockers: {
       type: Array,

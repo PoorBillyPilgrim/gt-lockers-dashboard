@@ -148,7 +148,6 @@ export default {
   },
   methods: {
     edit(id) {
-      // this.$root.$emit('edit', id)
       this.currentLocker = this.lockers.find(locker => locker.id === id)
       this.isEditModalActive = true
     },
