@@ -20,6 +20,7 @@
         <b-tab-item
           :key="groupIdx"
           :label="group"
+          class="box"
         >
           <div class="columns">
             <div class="column is-one-quarter">
@@ -29,7 +30,7 @@
                 class="columns"
               >
                 <p class="column">
-                  {{ status }}
+                  {{ capitalize(status) }}
                 </p>
                 <div class="column" />
                 <div class="column">
@@ -108,14 +109,14 @@ export default {
     statusType(status) {
       if (status === 'available') return 'is-success'
       return 'is-danger'
+    },
+    capitalize(word) {
+      word = word.split('_')
+      if (word[0][0] === undefined) return // for blank values, need to refactor
+      return word.length === 1 ? 
+        `${word[0][0].toUpperCase()}${word[0].substring(1)}` :
+        `${word[0][0].toUpperCase()}${word[0].substring(1)} ${word[1][0].toUpperCase()}${word[1].substring(1)}`
     }
-  },
-  capitalize(word) {
-    word = word.split('_')
-    if (word[0][0] === undefined) return // for blank values, need to refactor
-    return word.length === 1 ? 
-      `${word[0][0].toUpperCase()}${word[0].substring(1)}` :
-      `${word[0][0].toUpperCase()}${word[0].substring(1)} ${word[1][0].toUpperCase()}${word[1].substring(1)}`
   }
 }
 </script>

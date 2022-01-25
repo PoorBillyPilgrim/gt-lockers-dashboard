@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-table
-      class="box"
+      class=""
       :data="filterLockers"
       :loading="isLoading"
       :hoverable="true"
