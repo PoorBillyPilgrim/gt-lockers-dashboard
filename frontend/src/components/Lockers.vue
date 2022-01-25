@@ -38,6 +38,13 @@ export default {
         this.isLoading = false
       } catch (err) {
         console.error(err)
+        this.$buefy.notification.open({
+          indefinite: true,
+          message: `Oh no!! An error connecting to the database has occurred. Please reload your browser or contact Library IT to resolve.`,
+          position: 'is-top',
+          type: 'is-danger',
+          hasIcon: true
+        })
       }
     },
     async getData(url) {
