@@ -16,7 +16,7 @@ export default {
     return {
       isLoading: true,
       lockers: [],
-      schema: [],
+      schema: {},
       urls: [
         'http://localhost:4000/lockers',
         'http://localhost:4000/lockers/schema'
@@ -49,9 +49,7 @@ export default {
       }
     },
     makeRequests() {
-      this.urls.forEach(url => {
-        this.requests.push(this.getData(url))
-      })
+      this.requests = this.urls.map(url => this.getData(url)) 
     },
     parseLockers(lockers) {
       lockers.forEach(locker => {

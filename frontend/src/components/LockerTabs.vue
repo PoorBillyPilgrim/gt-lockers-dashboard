@@ -73,7 +73,11 @@ export default {
     },
     schema: {
       type: Object,
-      default: () => {}
+      default: () => {
+        return {
+          "schema": "none"
+        }
+      }
     }
   },
   data() {

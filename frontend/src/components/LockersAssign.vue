@@ -39,6 +39,9 @@ export default {
       type: String,
       default: 'Lockers'
     },
+    isLoading: {
+      type: Boolean
+    },
     lockers: {
       type: Array,
       default: () => []
