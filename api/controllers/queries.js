@@ -22,6 +22,7 @@ const getAvailableLocker = async (req, res, next) => {
     }
 
     const { locker_group, locker_size } = queryString.queries
+    if (locker_group === 'general') sql += ' floor <> 5'
     // add locker_size if value present
     sql += locker_size ? ' AND locker_size=? LIMIT 1' : ' LIMIT 1'
     const [rows] = await pool.query(sql, [locker_group, locker_size])
