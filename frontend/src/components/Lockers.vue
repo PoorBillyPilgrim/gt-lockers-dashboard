@@ -52,7 +52,7 @@ export default {
         let {data} = await axios.get(url)
         return data
       } catch (err) {
-        console.error(err)
+        console.error(err.response.data)
       }
     },
     makeRequests() {

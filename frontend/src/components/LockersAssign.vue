@@ -11,27 +11,34 @@
       />
     </div>
     <div v-else>
-      <b-field grouped>
-        <b-field
-          v-for="(filter,key,filterIndex) in findAvailableLocker"
-          :key="filterIndex"
-          :label="key.replace('_', ' ')"
-        >
-          <b-select :placeholder="`Select a ${key.replace('_', ' ')}`">
-            <option
-              v-for="(option,optionKey) in filter"
-              :key="optionKey"
-              :value="option"
-            >
-              {{ option }}
-            </option>
-          </b-select>
-        </b-field>
-      </b-field>
+      <div class="columns">
+        <section class="column is-3 box">
+          <h2>Select Locker Criteria</h2>
+          <b-field
+            v-for="(filter,key,filterIndex) in findAvailableLocker"
+            :key="filterIndex"
+            :label="key.replace('_', ' ')"
+            label-position="inside"
+          >
+            <b-select :placeholder="`Select a ${key.replace('_', ' ')}`">
+              <option
+                v-for="(option,optionKey) in filter"
+                :key="optionKey"
+                :value="option"
+              >
+                {{ option }}
+              </option>
+            </b-select>
+          </b-field>
+          <b-button @click="submit">Submit</b-button>
+        </section>
+        <div class="column"></div>
+      </div>
     </div>
   </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   name: 'LockersAssign',
   props: {
@@ -88,6 +95,16 @@ export default {
             "needs_repair"
           ]
         }
+      }
+    }
+  },
+  methods: {
+    async submit() {
+      try {
+        let {data} = await axios.get('http://localhost:4000/lockers/available')
+        console.log(data)
+      } catch (error) {
+        console.log(error.response.data)
       }
     }
   },
