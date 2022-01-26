@@ -1,7 +1,7 @@
 const pool = require('../database.js')
 const lockerSchema = require('../schema/locker.json')
 const parseQueryString = require('../services/parseQueryString')
-const { AppError } = require('../errors.js')
+const { AppError, sendErrorRes } = require('../errors.js')
 
 const getAll = async (req, res, next) => {
   try {
