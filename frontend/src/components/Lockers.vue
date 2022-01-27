@@ -4,6 +4,7 @@
       :lockers="lockers"
       :schema="schema"
       :is-loading="isLoading"
+      :api="api"
     />
   </div>
 </template>
@@ -17,9 +18,10 @@ export default {
       isLoading: true,
       lockers: [],
       schema: {},
-      urls: [
-        'http://localhost:4000/lockers',
-        'http://localhost:4000/lockers/schema'
+      api: 'http://localhost:4000',
+      routes: [
+        '/lockers',
+        '/lockers/schema'
       ],
       requests: []
     }
@@ -56,7 +58,7 @@ export default {
       }
     },
     makeRequests() {
-      this.requests = this.urls.map(url => this.getData(url)) 
+      this.requests = this.routes.map(route => this.getData(this.api + route)) 
     },
     parseLockers(lockers) {
       lockers.forEach(locker => {
@@ -72,7 +74,8 @@ export default {
       return word.length === 1 ? 
         `${word[0][0].toUpperCase()}${word[0].substring(1)}` :
         `${word[0][0].toUpperCase()}${word[0].substring(1)} ${word[1][0].toUpperCase()}${word[1].substring(1)}`
-    }
+    },
+
   }
 }
 </script>
