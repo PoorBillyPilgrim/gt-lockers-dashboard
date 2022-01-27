@@ -17,10 +17,10 @@
           <b-field
             v-for="(filter,key,filterIndex) in findAvailableLocker"
             :key="filterIndex"
-            :label="format(key)"
+            :label="key.replace('_', ' ')"
             label-position="inside"
           >
-            <b-select v-on:input.native="setLockerOptions(key, $event)" :placeholder="`Select a ${format(key)}`">
+            <b-select v-on:input.native="setLockerOptions(key, $event)" :placeholder="`Select a ${key.replace('_', ' ')}`">
               <option
                 v-for="(option,optionKey) in filter"
                 :key="optionKey"
@@ -33,10 +33,7 @@
           <b-button @click="submit">Submit</b-button>
         </section>
         <div class="column">
-          <p>LockerGroup: {{options.locker_group}}</p>
-        </div>
-        <div class="column">
-          LockerSize: {{options.locker_size}}
+          <p>{{availableLockerMessage}}</p>
         </div>
       </div>
     </div>
@@ -53,6 +50,10 @@ export default {
     },
     isLoading: {
       type: Boolean
+    },
+    api: {
+      type: String,
+      default: 'http://localhost:4000/'
     },
     lockers: {
       type: Array,
@@ -108,33 +109,51 @@ export default {
       options: {
         locker_group: '',
         locker_size: ''
+      },
+      availableRoute: '/lockers/available',
+      query: '',
+      filteredLockerSize: '',
+      filteredLockerGroup: '',
+      isLockerAvailable: false,
+      availableLocker: []
+    }
+  },
+  computed: {
+    findAvailableLocker: function() {
+      this.filterLockerOptions()
+      return {
+        locker_group: this.filteredLockerGroup,
+        locker_size: this.filteredLockerSize
       }
+    },
+    availableLockerMessage: function() {
+      return (this.availableLocker.length < 1) ? 'No locker available fitting that description' : this.availableLocker
     }
   },
   methods: {
     async submit() {
       try {
-        let {data} = await axios.get('http://localhost:4000/lockers/available?locker_group=graduate&locker_size=fdsf')
-        console.log(data)
+        this.isLoading = true
+        this.query = `?locker_group=${this.options.locker_group}`
+        const {data} = await axios.get(this.availableLockerQuery())
+        this.availableLocker = data
+        this.isLockerAvailable = true
+        this.isLoading = false
       } catch (error) {
         console.error(error.response.data)
       }
     },
-    setLockerOptions(key, event) {
-      this.options[key] = event.target.value
-    }
-  },
-  computed: {
-    findAvailableLocker: function() {
-      let filteredLockerSize = this.schema.locker_size.filter(size => size !== '')
-      filteredLockerSize.splice(0, 0, 'any')
-      return {
-        locker_group: this.schema.locker_group.filter(group => group !== 'clp'),
-        locker_size: filteredLockerSize
-      }
+    availableLockerQuery() {
+      return this.api + this.availableRoute + this.query
     },
-    format(key) {
-      return key.replace('_', ' ')
+    setLockerOptions(key, event) {
+      
+      this.options[key] = event.target.value
+    },
+    filterLockerOptions() {
+      this.filteredLockerSize = this.schema.locker_size.filter(size => size !== '')
+      this.filteredLockerSize.splice(0, 0, 'any')
+      this.filteredLockerGroup = this.schema.locker_group.filter(group => group !== 'clp')
     }
   }
 }
