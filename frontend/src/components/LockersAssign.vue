@@ -17,10 +17,10 @@
           <b-field
             v-for="(filter,key,filterIndex) in findAvailableLocker"
             :key="filterIndex"
-            :label="key.replace('_', ' ')"
+            :label="format(key)"
             label-position="inside"
           >
-            <b-select :placeholder="`Select a ${key.replace('_', ' ')}`">
+            <b-select v-on:input.native="setLockerOptions(key, $event)" :placeholder="`Select a ${format(key)}`">
               <option
                 v-for="(option,optionKey) in filter"
                 :key="optionKey"
@@ -32,7 +32,12 @@
           </b-field>
           <b-button @click="submit">Submit</b-button>
         </section>
-        <div class="column"></div>
+        <div class="column">
+          <p>LockerGroup: {{options.locker_group}}</p>
+        </div>
+        <div class="column">
+          LockerSize: {{options.locker_size}}
+        </div>
       </div>
     </div>
   </div>
@@ -98,14 +103,25 @@ export default {
       }
     }
   },
+  data() {
+    return {
+      options: {
+        locker_group: '',
+        locker_size: ''
+      }
+    }
+  },
   methods: {
     async submit() {
       try {
-        let {data} = await axios.get('http://localhost:4000/lockers/available')
+        let {data} = await axios.get('http://localhost:4000/lockers/available?locker_group=graduate&locker_size=fdsf')
         console.log(data)
       } catch (error) {
-        console.log(error.response.data)
+        console.error(error.response.data)
       }
+    },
+    setLockerOptions(key, event) {
+      this.options[key] = event.target.value
     }
   },
   computed: {
@@ -116,6 +132,9 @@ export default {
         locker_group: this.schema.locker_group.filter(group => group !== 'clp'),
         locker_size: filteredLockerSize
       }
+    },
+    format(key) {
+      return key.replace('_', ' ')
     }
   }
 }
