@@ -11,8 +11,8 @@
       />
     </div>
     <div v-else>
-      <div class="columns">
-        <section class="column is-3 box">
+      <div class="columns box">
+        <section class="column is-3">
           <h2 class="title is-4">Specify Locker Type</h2>
           <b-field
             v-for="(filter,key,filterIndex) in findAvailableLocker"
@@ -31,17 +31,27 @@
           </b-field>
           <b-button @click="submit">Submit</b-button>
         </section>
-        <div class="column">
+        <div class="column is-1"></div>
+        <section class="column">
+          <h2 class="title is-4">Locker</h2>
           <p>{{availableLockerMessage}}</p>
-        </div>
+          <LockerTable 
+            :lockers="availableLocker"
+            group="general"
+          />
+        </section>
       </div>
     </div>
   </div>
 </template>
 <script>
 import axios from 'axios'
+import LockerTable from '@/components/LockerTable.vue'
 export default {
   name: 'LockersAssign',
+  components: {
+    LockerTable
+  },
   props: {
     title: {
       type: String,
@@ -132,12 +142,10 @@ export default {
   methods: {
     async submit() {
       try {
-        this.isLoading = true
         this.query = `?locker_group=${this.options.locker_group}`
         const {data} = await axios.get(this.availableLockerQuery())
         this.availableLocker = data
         this.isLockerAvailable = true
-        this.isLoading = false
       } catch (error) {
         console.error(error.response.data)
       }
@@ -158,5 +166,7 @@ export default {
 }
 </script>
 <style scoped>
-
+  .box {
+    padding: 2rem;
+  }
 </style>
