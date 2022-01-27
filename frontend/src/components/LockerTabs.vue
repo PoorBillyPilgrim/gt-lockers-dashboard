@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="title">
+    <h1 class="title has-text-centered">
       {{ title }}
     </h1>
     <b-tabs

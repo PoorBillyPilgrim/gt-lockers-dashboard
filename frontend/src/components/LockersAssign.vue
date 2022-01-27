@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="title">
+    <h1 class="title has-text-centered">
       {{ title }}
     </h1>
 
@@ -13,14 +13,13 @@
     <div v-else>
       <div class="columns">
         <section class="column is-3 box">
-          <h2>Select Locker Criteria</h2>
+          <h2 class="title is-4">Specify Locker Type</h2>
           <b-field
             v-for="(filter,key,filterIndex) in findAvailableLocker"
             :key="filterIndex"
             :label="key.replace('_', ' ')"
-            label-position="inside"
           >
-            <b-select v-on:input.native="setLockerOptions(key, $event)" :placeholder="`Select a ${key.replace('_', ' ')}`">
+            <b-select v-on:input.native="setLockerOptions(key, $event)" :placeholder="`Select a ${key.replace('_', ' ')}`" expanded>
               <option
                 v-for="(option,optionKey) in filter"
                 :key="optionKey"
