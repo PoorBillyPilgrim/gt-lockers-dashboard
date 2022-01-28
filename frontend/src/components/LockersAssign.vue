@@ -36,9 +36,11 @@
           <h2 class="title is-4">Locker</h2>
           <LockerTable 
             :lockers="availableLocker"
+            :group="currentGroup"
             :is-paginated="false"
             :is-hoverable="true"
-            :group="currentGroup"
+            :can-search-patron="false"
+            :emptyMessage="availableLockerMessage"
           />
         </section>
       </div>
@@ -126,7 +128,8 @@ export default {
       filteredLockerSize: '',
       filteredLockerGroup: '',
       isLockerAvailable: false,
-      availableLocker: []
+      availableLocker: [],
+      availableLockerMessage: 'Please select a locker group.'
     }
   },
   computed: {
@@ -136,9 +139,6 @@ export default {
         locker_group: this.filteredLockerGroup,
         locker_size: this.filteredLockerSize
       }
-    },
-    availableLockerMessage: function() {
-      return (this.availableLocker.length < 1) ? 'No locker available fitting that description' : this.availableLocker
     }
   },
   methods: {
@@ -147,6 +147,7 @@ export default {
         this.query = `?locker_group=${this.options.locker_group}`
         this.currentGroup = this.options.locker_group
         const {data} = await axios.get(this.availableLockerQuery())
+        if (data.length === 0) this.availableLockerMessage = `Sorry, no ${this.currentGroup} locker is currently available.`
         this.availableLocker = data
         this.isLockerAvailable = true
       } catch (error) {
