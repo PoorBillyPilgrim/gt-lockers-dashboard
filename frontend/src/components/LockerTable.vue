@@ -95,7 +95,7 @@
       </b-table-column>
 
       <template #empty>
-        <div class="has-text-centered">{{emptyMessage}}</div>
+        <b-message type="is-info" has-icon size="is-medium">{{emptyMessage}}</b-message>
       </template>
     </b-table>
     

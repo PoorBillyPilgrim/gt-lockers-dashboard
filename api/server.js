@@ -37,5 +37,5 @@ app.use(logError)
 app.use(sendErrorRes)
 
 app.listen(port, () => {
-  console.log(`########################\nserver listening on http://localhost:${port}\n########################`)
+  console.log(`\nServer listening on http://localhost:${port}\n`)
 })
