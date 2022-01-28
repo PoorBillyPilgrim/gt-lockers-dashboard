@@ -34,12 +34,11 @@
         <div class="column is-1"></div>
         <section class="column">
           <h2 class="title is-4">Locker</h2>
-          <p>{{availableLockerMessage}}</p>
           <LockerTable 
             :lockers="availableLocker"
             :is-paginated="false"
             :is-hoverable="true"
-            group="general"
+            :group="currentGroup"
           />
         </section>
       </div>
@@ -121,6 +120,7 @@ export default {
         locker_group: '',
         locker_size: ''
       },
+      currentGroup: '',
       availableRoute: '/lockers/available',
       query: '',
       filteredLockerSize: '',
@@ -145,6 +145,7 @@ export default {
     async submit() {
       try {
         this.query = `?locker_group=${this.options.locker_group}`
+        this.currentGroup = this.options.locker_group
         const {data} = await axios.get(this.availableLockerQuery())
         this.availableLocker = data
         this.isLockerAvailable = true
