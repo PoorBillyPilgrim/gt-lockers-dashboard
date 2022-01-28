@@ -145,9 +145,10 @@ export default {
     async submit() {
       try {
         this.query = `?locker_group=${this.options.locker_group}`
+        if (this.options.locker_size !== 'any') this.query += `&locker_size=${this.options.locker_size}`
         this.currentGroup = this.options.locker_group
         const {data} = await axios.get(this.availableLockerQuery())
-        if (data.length === 0) this.availableLockerMessage = `Sorry, no ${this.currentGroup} locker is currently available.`
+        if (data.length === 0) this.availableLockerMessage = `Sorry, no ${this.options.locker_size}-sized ${this.currentGroup} locker is currently available.`
         this.availableLocker = data
         this.isLockerAvailable = true
       } catch (error) {
