@@ -1,10 +1,9 @@
 <template>
   <div>
     <b-table
-      class=""
       :data="filterLockers"
       :loading="isLoading"
-      :hoverable="true"
+      :hoverable="isHoverable"
       :paginated="isPaginated"
       :per-page="perPage"
       :current-page.sync="currentPage"
@@ -127,11 +126,16 @@ export default {
     },
     isLoading: {
       type: Boolean
+    },
+    isPaginated: {
+      type: Boolean
+    },
+    isHoverable: {
+      type: Boolean
     }
   },
   data() {
     return {
-      isPaginated: true,
       perPage: 10,
       currentPage: 1,
       currentLocker: {},

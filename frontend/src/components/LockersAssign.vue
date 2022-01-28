@@ -37,6 +37,8 @@
           <p>{{availableLockerMessage}}</p>
           <LockerTable 
             :lockers="availableLocker"
+            :is-paginated="false"
+            :is-hoverable="true"
             group="general"
           />
         </section>

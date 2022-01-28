@@ -45,6 +45,8 @@
               :lockers="lockers"
               :group="group"
               :is-loading="isLoading"
+              :is-paginated="true"
+              :is-hoverable="true"
             />
           </div>
         </b-tab-item>
