@@ -47,6 +47,7 @@
               :is-loading="isLoading"
               :is-paginated="true"
               :is-hoverable="true"
+              :can-search-patron="true"
             />
           </div>
         </b-tab-item>

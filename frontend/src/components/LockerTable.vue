@@ -45,7 +45,7 @@
         v-slot="props"
         field="patron_name"
         label="Patron Name"
-        searchable
+        :searchable="canSearchPatron"
       >
         {{ props.row.patron_name }}
       </b-table-column>
@@ -93,6 +93,10 @@
           Edit
         </b-button>
       </b-table-column>
+
+      <template #empty>
+        <div class="has-text-centered">{{emptyMessage}}</div>
+      </template>
     </b-table>
     
     <b-modal
@@ -132,6 +136,13 @@ export default {
     },
     isHoverable: {
       type: Boolean
+    },
+    canSearchPatron: {
+      type: Boolean
+    },
+    emptyMessage: {
+      type: String,
+      default: 'Sorry, no locker data currently available.'
     }
   },
   data() {
