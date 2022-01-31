@@ -101,13 +101,6 @@ $link-focus-border: $primary;
 // Box styling
 $box-padding: 1rem;
 
-.b-tabs {
-
-    .tab-content {
-        padding: 0;
-    }
-}
-
 // Import Bulma and Buefy styles
 @import "~bulma";
 @import "~buefy/src/scss/buefy";

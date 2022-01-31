@@ -20,7 +20,7 @@
         <b-tab-item
           :key="groupIdx"
           :label="group"
-          class="box"
+          class=""
         >
           <div class="columns">
             <div class="column is-one-quarter">
@@ -123,8 +123,9 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss">
 .b-tabs .tab-content {
-  padding: 0 !important;
+  border: 1px solid #dbdbdb;
+  border-top: 0 solid transparent !important;
 }
 </style>
