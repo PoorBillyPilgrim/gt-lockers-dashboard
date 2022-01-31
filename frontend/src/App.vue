@@ -107,7 +107,8 @@ $box-padding: 1rem;
 
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-family: $family-sans-serif;
+//   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: $primary;
