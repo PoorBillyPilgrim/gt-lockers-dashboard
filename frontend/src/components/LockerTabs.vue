@@ -126,5 +126,10 @@ export default {
 .b-tabs .tab-content {
   border: 1px solid #dbdbdb;
   border-top: 0 solid transparent !important;
+  box-shadow: 0 0.5em 1em -0.125em rgba(hsl(0, 0%, 4%), 0.1);
+}
+
+.tabs li.is-active {
+  box-shadow: 0 0.5em 1em -0.125em rgba(hsl(0, 0%, 4%), 0.1), 0 0px 0 1px rgba(hsl(0, 0%, 4%), 0.02);
 }
 </style>
