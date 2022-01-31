@@ -1,7 +1,7 @@
 const pool = require('../database.js')
 const lockerSchema = require('../schema/locker.json')
 const parseQueryString = require('../services/parseQueryString')
-const { AppError, sendErrorRes } = require('../errors.js')
+const { AppError } = require('../errors.js')
 
 const getAll = async (req, res, next) => {
   try {
@@ -34,14 +34,12 @@ const getAvailableLocker = async (req, res, next) => {
 }
 
 const getSchema = async (req, res, next) => {
-  
-    try {
- 
-      res.status(200).send(lockerSchema)
-    } catch (err) {
-      next(err)
-    }
+  try {
+    res.status(200).send(lockerSchema)
+  } catch (err) {
+    next(err)
   }
+}
 
 module.exports = {
   getAll,
