@@ -27,13 +27,12 @@
               <div
                 v-for="(total,status,statusIdx) in totals"
                 :key="statusIdx"
-                class="columns"
+                class="columns is-justify-content-space-between"
               >
                 <p class="column">
                   {{ capitalize(status) }}
                 </p>
-                <div class="column" />
-                <div class="column">
+                <div class="column is-flex-grow-0">
                   <b-tag :type="statusType(status)">
                     {{ total }}
                   </b-tag>
