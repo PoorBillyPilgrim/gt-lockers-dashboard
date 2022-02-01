@@ -31,14 +31,19 @@
             <span>Hello, User</span>
             <b-icon
               icon="account"
-            ></b-icon>
+            />
           </div>
         </a>
         <div class="navbar-dropdown">
           <a class="navbar-item">Test 1</a>
           <a class="navbar-item">Test 2</a>
           <hr class="navbar-divider">
-          <a class="navbar-item">Log Out</a>
+          <router-link
+            to="/login"
+            class="navbar-item"
+          >
+            Log Out
+          </router-link>
         </div>
       </div>
       <!--<b-navbar-item tag="div">
