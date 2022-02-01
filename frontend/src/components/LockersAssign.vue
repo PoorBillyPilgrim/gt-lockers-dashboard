@@ -13,13 +13,19 @@
     <div v-else>
       <div class="columns box">
         <section class="column is-3">
-          <h2 class="title is-4">Specify Locker Type</h2>
+          <h2 class="title is-4">
+            Specify Locker Type
+          </h2>
           <b-field
             v-for="(filter,key,filterIndex) in findAvailableLocker"
             :key="filterIndex"
             :label="key.replace('_', ' ')"
           >
-            <b-select v-on:input.native="setLockerOptions(key, $event)" :placeholder="`Select a ${key.replace('_', ' ')}`" expanded>
+            <b-select
+              :placeholder="`Select a ${key.replace('_', ' ')}`"
+              expanded
+              @input.native="setLockerOptions(key, $event)"
+            >
               <option
                 v-for="(option,optionKey) in filter"
                 :key="optionKey"
@@ -29,18 +35,22 @@
               </option>
             </b-select>
           </b-field>
-          <b-button @click="submit">Submit</b-button>
+          <b-button @click="submit">
+            Submit
+          </b-button>
         </section>
-        <div class="column is-1"></div>
+        <div class="column is-1" />
         <section class="column">
-          <h2 class="title is-4">Locker</h2>
+          <h2 class="title is-4">
+            Locker
+          </h2>
           <LockerTable 
             :lockers="availableLocker"
             :group="currentGroup"
             :is-paginated="false"
             :is-hoverable="true"
             :can-search-patron="false"
-            :emptyMessage="availableLockerMessage"
+            :empty-message="availableLockerMessage"
           />
         </section>
       </div>
