@@ -38,12 +38,12 @@
           <a class="navbar-item">Test 1</a>
           <a class="navbar-item">Test 2</a>
           <hr class="navbar-divider">
-          <router-link
-            to="/login"
+          <a
             class="navbar-item"
+            @click="$emit('logout')"
           >
             Log Out
-          </router-link>
+          </a>
         </div>
       </div>
       <!--<b-navbar-item tag="div">

@@ -1,19 +1,39 @@
 <template>
   <div id="app">
-    <NavBar />
-    <Lockers />
+    <div v-if="!isAuthenticated">
+      <Login @login="login" />
+    </div>
+    <div v-else>
+      <NavBar @logout="logout"/>
+      <Lockers />
+    </div>
   </div>
 </template>
 
 <script>
+import Login from '@/components/Login.vue'
 import NavBar from '@/components/NavBar.vue'
 import Lockers from '@/components/Lockers.vue'
 
 export default {
   name: 'App',
   components: {
+    Login,
     NavBar,
     Lockers
+  },
+  data() {
+    return {
+      isAuthenticated: false
+    }
+  },
+  methods: {
+    login() {
+      this.isAuthenticated = true
+    },
+    logout() {
+      this.isAuthenticated = false
+    }
   }
 }
 </script>

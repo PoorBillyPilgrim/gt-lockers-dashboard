@@ -1,13 +1,17 @@
 <template>
   <form
     class="box"
-    @submit.prevent="submit"
+    @submit.prevent="login"
   >
     <b-field label="Email">
-      <b-input value="Please enter your GT email" />
+      <b-input
+        v-model="email"
+        placeholder="Please enter your GT email"
+      />
     </b-field>
     <b-field label="Password">
       <b-input
+        v-model="password"
         type="password"
       />
     </b-field>
@@ -19,9 +23,17 @@
 <script>
 export default {
   name: 'Login',
+  data() {
+    return {
+      email: '',
+      password: ''
+    }
+  },
   methods: {
-    submit() {
-      console.log('submitted!')
+    login() {
+      if (this.email === 'test@test.com' && this.password === 'test') {
+        this.$emit('login')
+      }
     }
   }
 }
