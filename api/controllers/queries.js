@@ -47,7 +47,7 @@ const getAvailableLocker = async (req, res, next) => {
 
 const getSchema = async (req, res, next) => {
   try {
-    const data = await fs.readFile('./schema/locker.json')
+    const data = await fs.readFile('./schema/locker.json') // file path is ./ not ../ because file read from server.js
     res.status(200).send(data)
   } catch (err) {
     next(err)
