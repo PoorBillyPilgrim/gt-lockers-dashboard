@@ -8,6 +8,14 @@ const { AppError, catchAsyncErrors } = require('../errors.js')
 router.get('/', catchAsyncErrors(getAll))
 
 // single locker
+router.put('/locker', async (req, res, next) => {
+  try {
+    console.log(req.body)
+    res.status(200).json({response: req.body})
+  } catch (err) {
+    next(err)
+  }
+})
 router.get('/locker/:id', catchAsyncErrors(getLockerById))
 router.put('/locker/:id', catchAsyncErrors(updateLockerCode))
 

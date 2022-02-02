@@ -12,6 +12,10 @@ const port = config.port || 4000
 app.use(cors())
 app.use(helmet())
 
+// parsing
+app.use(express.json())
+app.use(express.urlencoded({ extended: true })) 
+
 // routes
 app.get('/', (req, res, next) => {
   // change this to send a page detailing endpoints
