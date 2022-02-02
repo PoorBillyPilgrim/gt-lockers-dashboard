@@ -17,6 +17,12 @@ const getAll = async (req, res, next) => {
 const getLockerById = async (req, res, next) => {
   try {
     const sql = 'SELECT * FROM lockers WHERE id = ?'
+    if (isNaN(parseInt(req.params.id))) {
+      throw new AppError('ID must be a valid integer', 404)
+    }
+    if (parseInt(req.params.id) < 1) {
+      throw new AppError('ID must be greater than or equal to 1', 404)
+    }
     const [row] = await pool.query(sql, [req.params.id])
     res.status(200).send(row)
   } catch (err) {

@@ -6,7 +6,7 @@ const { AppError, catchAsyncErrors } = require('../errors.js')
 
 router.get('/', catchAsyncErrors(getAll))
 
-router.get('/:id', catchAsyncErrors(getLockerById))
+router.get('/locker/:id', catchAsyncErrors(getLockerById))
 
 router.get('/available', catchAsyncErrors(getAvailableLocker))
 
@@ -22,7 +22,7 @@ const getLockerGroup = async (req, res, next) => {
   }
 }
 
-router.get('/:lockerGroup', catchAsyncErrors(getLockerGroup))
+router.get('/group/:lockerGroup', catchAsyncErrors(getLockerGroup))
 
 router.get('/floors/:floor', async (req, res, next) => {
   const sql = 'SELECT * FROM lockers WHERE floor = ?'
