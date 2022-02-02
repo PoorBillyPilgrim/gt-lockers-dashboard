@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-card">
+  <form @submit.prevent="save" class="modal-card">
     <header class="modal-card-head">
       <p class="modal-card-title">
         Locker #{{ currentLocker.locker_number }}, {{ currentLocker.building }}
@@ -32,7 +32,7 @@
     <footer class="modal-card-foot">
       <b-button
         type="is-success"
-        @click="save"
+        native-type="submit"
       >
         Save
       </b-button>
@@ -43,7 +43,7 @@
         Cancel
       </b-button>
     </footer>
-  </div>
+  </form>
 </template>
 <script>
 export default {
