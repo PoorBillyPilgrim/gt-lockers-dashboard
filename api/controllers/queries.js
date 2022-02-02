@@ -1,8 +1,9 @@
 const pool = require('../database.js')
 const lockerSchema = require('../schema/locker.json')
-const path = require('path')
 const fs = require('fs/promises')
 const parseQueryString = require('../services/parseQueryString')
+const validateId = require('../services/validateId')
+const randomInt = require('../utils/randomInt')
 const { AppError } = require('../errors.js')
 
 const getAll = async (req, res, next) => {
@@ -11,18 +12,6 @@ const getAll = async (req, res, next) => {
     res.status(200).send(rows)
   } catch (err) {
     next(err)
-  }
-}
-
-const validateId = (id) => {
-  if (id === undefined) {
-    throw new AppError('ID must be present', 404)
-  }
-  if (isNaN(parseInt(id))) {
-    throw new AppError('ID must be a valid integer', 404)
-  }
-  if (parseInt(id) < 1) {
-    throw new AppError('ID must be greater than or equal to 1', 404)
   }
 }
 
@@ -37,9 +26,22 @@ const getLockerById = async (req, res, next) => {
   }
 }
 
-
-const randomInt = (min, max) => {
-  return (Math.floor(Math.random() * (max - min + 1) + min)).toString()
+const updateLocker = async (req, res, next) => {
+  try {
+    const {id, patron_name, current_code, locker_status} = req.body
+    validateId(id)
+    const sql = 
+    `
+    UPDATE lockers
+    SET patron_name=?, current_code=?, locker_status=?
+    WHERE id=?
+    `
+    const [query] = await pool.query(sql, [patron_name, current_code, locker_status, id])
+    let message = query.changedRows > 0 ? 'Changes made successfully.' : 'No changes made.'
+    res.status(200).send({message: message})
+  } catch (err) {
+    next(err)
+  }
 }
 
 const updateLockerCode = async (req, res, next) => {
@@ -52,7 +54,7 @@ const updateLockerCode = async (req, res, next) => {
       passcode += i === 0 ? randomInt(1, 9) : randomInt(0, 9)
     }
     const [query] = await pool.query(sql, [passcode, req.params.id])
-    let message = query.changedRows > 0 ? 'New locker code created successfully.' : 'Sorry, no updates were made.CANNO'
+    let message = query.changedRows > 0 ? 'New locker code created successfully.' : 'Sorry, no updates were made.'
     res.status(200).send({message: message})
   } catch (err) {
     next(err)
@@ -92,6 +94,7 @@ const getSchema = async (req, res, next) => {
 module.exports = {
   getAll,
   getLockerById,
+  updateLocker,
   updateLockerCode,
   getAvailableLocker,
   getSchema
