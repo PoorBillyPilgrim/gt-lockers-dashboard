@@ -1,21 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const pool = require('../database.js')
-const { getAll, getLockerById, getAvailableLocker, updateLockerCode } = require('../controllers/queries.js')
+const { getAll, getLockerById, updateLocker, getAvailableLocker, updateLockerCode } = require('../controllers/queries.js')
 const { AppError, catchAsyncErrors } = require('../errors.js')
 
 // all lockers
 router.get('/', catchAsyncErrors(getAll))
 
 // single locker
-router.put('/locker', async (req, res, next) => {
-  try {
-    console.log(req.body)
-    res.status(200).json({response: req.body})
-  } catch (err) {
-    next(err)
-  }
-})
+router.put('/locker', catchAsyncErrors(updateLocker))
 router.get('/locker/:id', catchAsyncErrors(getLockerById))
 router.put('/locker/:id', catchAsyncErrors(updateLockerCode))
 
