@@ -61,6 +61,7 @@
         field="floor"
         label="Floor"
         numeric
+        searchable
       >
         {{ props.row.floor }}
       </b-table-column>
@@ -112,6 +113,7 @@
       <template #default="props">
         <locker-edit-modal
           :current-locker="currentLocker"
+          :is-loading="isLoading"
           @close="props.close"
         />
       </template>
