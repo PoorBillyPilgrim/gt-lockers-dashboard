@@ -46,6 +46,7 @@
           </h2>
           <LockerTable 
             :lockers="availableLocker"
+            :is-loading="isLoading"
             :group="currentGroup"
             :is-paginated="false"
             :is-hoverable="true"
