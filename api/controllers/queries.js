@@ -24,7 +24,6 @@ const getLockerById = async (req, res, next) => {
   }
 }
 
-
 const getAvailableLocker = async (req, res, next) => {
   try {
     let sql = 'SELECT * FROM lockers WHERE locker_status="available" AND locker_group=?'
@@ -49,7 +48,6 @@ const getAvailableLocker = async (req, res, next) => {
 const getSchema = async (req, res, next) => {
   try {
     const data = await fs.readFile('./schema/locker.json')
-    // console.log(data)
     res.status(200).send(data)
   } catch (err) {
     next(err)

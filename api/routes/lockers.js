@@ -10,8 +10,6 @@ router.get('/:id', catchAsyncErrors(getLockerById))
 
 router.get('/available', catchAsyncErrors(getAvailableLocker))
 
-
-
 const getLockerGroup = async (req, res, next) => {
   const sql = 'SELECT * FROM lockers WHERE locker_group = ?'
   try {
