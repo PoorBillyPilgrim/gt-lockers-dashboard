@@ -4,7 +4,7 @@
       <Login @login="login" />
     </div>
     <div v-else>
-      <NavBar @logout="logout"/>
+      <NavBar @logout="logout" />
       <Lockers />
     </div>
   </div>

@@ -4,8 +4,13 @@
     :can-cancel="false"
     has-modal-card
   >
-    <form @submit.prevent="login" class="modal-card">
-      <header class="modal-card-head">Login</header>
+    <form
+      class="modal-card"
+      @submit.prevent="login"
+    >
+      <header class="modal-card-head">
+        Login
+      </header>
       <section class="modal-card-body">
         <b-field label="Email">
           <b-input
