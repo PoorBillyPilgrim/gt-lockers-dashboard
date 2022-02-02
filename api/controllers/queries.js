@@ -1,5 +1,7 @@
 const pool = require('../database.js')
-const lockerSchema = require('../schema/locker.json')
+// const lockerSchema = require('../schema/locker.json')
+const path = require('path')
+const fs = require('fs/promises')
 const parseQueryString = require('../services/parseQueryString')
 const { AppError } = require('../errors.js')
 
@@ -46,7 +48,9 @@ const getAvailableLocker = async (req, res, next) => {
 
 const getSchema = async (req, res, next) => {
   try {
-    res.status(200).send(lockerSchema)
+    const data = await fs.readFile('./schema/locker.json')
+    // console.log(data)
+    res.status(200).send(data)
   } catch (err) {
     next(err)
   }

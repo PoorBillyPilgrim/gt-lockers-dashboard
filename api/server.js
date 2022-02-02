@@ -14,9 +14,11 @@ app.use(helmet())
 
 // routes
 app.get('/', (req, res, next) => {
-  res.status(301).redirect('/lockers')
+  // change this to send a page detailing endpoints
+  res.status(200).send('welcome to the lockers API :)')
 })
-app.use('/lockers', require('./routes/lockers.js'))
+app.use('/lockers', require('./routes/lockers'))
+app.use('/schema', require('./routes/schema'))
 app.get('/test-error', (req, res, next) => {
   const testErr = new Error('test error')
   testErr.statusCode = 404

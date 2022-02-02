@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const pool = require('../database.js')
-const { getAll, getLockerById, getAvailableLocker, getSchema } = require('../controllers/queries.js')
+const { getAll, getLockerById, getAvailableLocker } = require('../controllers/queries.js')
 const { AppError, catchAsyncErrors } = require('../errors.js')
 
 router.get('/', catchAsyncErrors(getAll))
@@ -10,7 +10,7 @@ router.get('/:id', catchAsyncErrors(getLockerById))
 
 router.get('/available', catchAsyncErrors(getAvailableLocker))
 
-router.get('/schema', catchAsyncErrors(getSchema))
+
 
 const getLockerGroup = async (req, res, next) => {
   const sql = 'SELECT * FROM lockers WHERE locker_group = ?'
