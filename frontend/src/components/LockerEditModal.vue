@@ -62,6 +62,7 @@ export default {
   methods: {
     save() {
       this.$emit('close')
+      console.log(this.currentLocker)
       this.$buefy.notification.open({
         message: 'Locker info has been saved',
         type: 'is-success',

@@ -21,14 +21,14 @@ export default {
       api: 'http://localhost:4000',
       routes: [
         '/lockers',
-        '/lockers/schema'
+        '/schema'
       ],
       requests: []
     }
   },
   created: function() {
     this.getLockerData()
-    this.$root.$on('update', () => this.getLockers())
+    this.$root.$on('update', () => this.getLockerData())
   },
   methods: {
     async getLockerData() {
