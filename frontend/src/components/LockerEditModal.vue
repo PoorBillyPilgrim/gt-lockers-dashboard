@@ -16,11 +16,11 @@
     </header>
     <section class="modal-card-body">
       <b-field label="Patron Name">
-        <b-input v-model="currentLocker.patron_name" />
+        <b-input v-model="updatedLocker.patron_name" />
       </b-field>
       <b-field label="Current Code">
         <b-input
-          v-model="currentLocker.current_code"
+          v-model="updatedLocker.current_code"
           type="number"
           min="1000"
           max="9999"
@@ -28,7 +28,7 @@
       </b-field>
       <b-field label="Status">
         <b-select
-          v-model="currentLocker.locker_status"
+          v-model="updatedLocker.locker_status"
           :placeholder="currentLocker.locker_status"
         >
           <option 
@@ -83,11 +83,12 @@ export default {
         headers: {
           'Content-Type': 'application/json'
         },
-        data: JSON.stringify(this.currentLocker)
+        data: JSON.stringify(this.updatedLocker)
       }
 
       const response = await axios(options)
       console.log(response)
+      this.$parent.close()
       this.$buefy.notification.open({
         message: 'Locker info has been saved',
         type: 'is-success',
@@ -97,7 +98,16 @@ export default {
       })
       this.$root.$emit('update')
     }
+  },
+  computed: {
+    updatedLocker: function() {
+      return {
+        id: this.currentLocker.id,
+        patron_name: this.currentLocker.patron_name,
+        current_code: this.currentLocker.current_code,
+        locker_status: this.currentLocker.locker_status
+      }
+    }
   }
-
 }
 </script>
