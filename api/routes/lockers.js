@@ -1,10 +1,12 @@
 const express = require('express')
 const router = express.Router()
 const pool = require('../database.js')
-const { getAll, getAvailableLocker, getSchema } = require('../controllers/queries.js')
+const { getAll, getLockerById, getAvailableLocker, getSchema } = require('../controllers/queries.js')
 const { AppError, catchAsyncErrors } = require('../errors.js')
 
 router.get('/', catchAsyncErrors(getAll))
+
+router.get('/:id', catchAsyncErrors(getLockerById))
 
 router.get('/available', catchAsyncErrors(getAvailableLocker))
 

@@ -12,6 +12,17 @@ const getAll = async (req, res, next) => {
   }
 }
 
+const getLockerById = async (req, res, next) => {
+  try {
+    const sql = 'SELECT * FROM lockers WHERE id = ?'
+    const [row] = await pool.query(sql, [req.params.id])
+    res.status(200).send(row)
+  } catch (err) {
+    next(err)
+  }
+}
+
+
 const getAvailableLocker = async (req, res, next) => {
   try {
     let sql = 'SELECT * FROM lockers WHERE locker_status="available" AND locker_group=?'
@@ -43,6 +54,7 @@ const getSchema = async (req, res, next) => {
 
 module.exports = {
   getAll,
+  getLockerById,
   getAvailableLocker,
   getSchema
 }
