@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import LockerTabs from '@/components/LockerTabs.vue'
 import LockersAssign from '@/components/LockersAssign.vue'
+import LockerSettings from '@/components/LockerSettings.vue'
 import Buefy from 'buefy'
 import App from './App.vue'
 
@@ -20,6 +21,11 @@ const routes = [
     path: '/assign',
     component: LockersAssign,
     props: { title: "Find Available Locker"}
+  },
+  {
+    path: '/settings',
+    component: LockerSettings,
+    props: { title: "Locker Settings"}
   },
   { path: '*', redirect: '/lockers' }
 ]
