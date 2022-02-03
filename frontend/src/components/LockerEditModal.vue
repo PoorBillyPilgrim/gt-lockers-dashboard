@@ -22,7 +22,7 @@
         <b-input
           v-model="updatedLocker.current_code"
           type="number"
-          min="1000"
+          min="0"
           max="9999"
         />
       </b-field>
@@ -32,7 +32,7 @@
           :placeholder="currentLocker.locker_status"
         >
           <option 
-            v-for="(status,index) in statusOptions" 
+            v-for="(status,index) in schema.locker_status" 
             :key="index"
             :value="status"
           >
@@ -68,6 +68,10 @@ export default {
     },
     isLoading: {
       type: Boolean
+    },
+    schema: {
+      type: Object,
+      default: () => {}
     }
   },
   data() {

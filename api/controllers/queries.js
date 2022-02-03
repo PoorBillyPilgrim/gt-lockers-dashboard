@@ -82,14 +82,35 @@ const getAvailableLocker = async (req, res, next) => {
   }
 }
 
-const getSchema = async (req, res, next) => {
-  try {
-    const data = await fs.readFile('./schema/locker.json') // file path is ./ not ../ because file read from server.js
-    res.status(200).send(data)
-  } catch (err) {
-    next(err)
+const Schema = {
+  get: async (req, res, next) => {
+    try {
+      const data = await fs.readFile('./schema/locker.json') // file path is ./ not ../ because file read from server.js
+      res.status(200).send(data)
+    } catch (err) {
+      next(err)
+    }
+  },
+  
+  update: async (req, res, next) => {
+    try {
+      const {locker_status} = req.body
+      const data = await fs.readFile('./schema/locker.json') // file path is ./ not ../ because file read from server.js
+      let schema = JSON.parse(data)
+      if (schema.locker_status.includes(locker_status)) {
+        throw new AppError('This status already exists', 409)
+      }
+      schema.locker_status.push(locker_status)
+      const promise = await fs.writeFile('./schema/locker.json', JSON.stringify(schema))
+
+      res.status(200).send({message: 'New status successfully added'})
+    } catch (err) {
+      next(err)
+    }
   }
 }
+
+
 
 module.exports = {
   getAll,
@@ -97,5 +118,5 @@ module.exports = {
   updateLocker,
   updateLockerCode,
   getAvailableLocker,
-  getSchema
+  Schema
 }

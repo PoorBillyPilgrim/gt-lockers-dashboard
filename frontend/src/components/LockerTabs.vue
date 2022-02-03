@@ -42,6 +42,7 @@
             <LockerTable
               class="column"
               :lockers="lockers"
+              :schema="schema"
               :group="group"
               :is-loading="isLoading"
               :is-paginated="true"

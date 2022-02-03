@@ -47,6 +47,7 @@
           <LockerTable 
             :lockers="availableLocker"
             :is-loading="isLoading"
+            :schema="schema"
             :group="currentGroup"
             :is-paginated="false"
             :is-hoverable="true"

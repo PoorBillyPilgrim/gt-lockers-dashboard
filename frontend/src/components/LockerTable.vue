@@ -113,6 +113,7 @@
       <template #default="props">
         <locker-edit-modal
           :current-locker="currentLocker"
+          :schema="schema"
           :is-loading="isLoading"
           @close="props.close"
         />
@@ -131,6 +132,10 @@ export default {
     lockers: {
       type: Array,
       default: () => []
+    },
+    schema: {
+      type: Object,
+      default: () => {}
     },
     group: {
       type: String,
