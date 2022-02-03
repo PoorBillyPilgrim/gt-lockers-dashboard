@@ -20,8 +20,11 @@
       >
         Find Available Locker
       </b-navbar-item>
-      <b-navbar-item>
-        Configure
+      <b-navbar-item
+        tag="router-link"
+        :to="{path: '/settings'}"
+      >
+        Settings
       </b-navbar-item>
     </template>
     <template #end>
@@ -46,15 +49,6 @@
           </a>
         </div>
       </div>
-      <!--<b-navbar-item tag="div">
-          <div class="icon-text">
-            <span>Hello, User</span>
-            <b-icon
-              icon="account"
-            ></b-icon>
-          </div>
-      </b-navbar-item>-->
-      <!--<b-navbar-dropdown label="Hello, User"></b-navbar-dropdown>-->
     </template>
   </b-navbar>
 </template>
