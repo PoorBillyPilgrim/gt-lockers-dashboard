@@ -79,6 +79,16 @@ export default {
       statusOptions: ['available', 'checked_out', 'disabled', 'needs_repair']
     }
   },
+  computed: {
+    updatedLocker: function() {
+      return {
+        id: this.currentLocker.id,
+        patron_name: this.currentLocker.patron_name,
+        current_code: this.currentLocker.current_code,
+        locker_status: this.currentLocker.locker_status
+      }
+    }
+  },
   methods: {
     async save() {
       const options = {
@@ -101,16 +111,6 @@ export default {
         indefinite: true
       })
       this.$root.$emit('update')
-    }
-  },
-  computed: {
-    updatedLocker: function() {
-      return {
-        id: this.currentLocker.id,
-        patron_name: this.currentLocker.patron_name,
-        current_code: this.currentLocker.current_code,
-        locker_status: this.currentLocker.locker_status
-      }
     }
   }
 }
